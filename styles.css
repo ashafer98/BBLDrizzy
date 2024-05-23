@@ -1,8 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Hide horizontal scrollbar if not needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: #f4c2e8; /* Light purple background */
+}
+
 body {
     font-family: Georgia, serif;
     margin: 0;
     padding: 0;
-    background-color: #f4c2e8; /* Light purple background */
+}
+
+h1 {
+    font-size: 60px;
 }
 
 nav {
@@ -11,6 +23,7 @@ nav {
     align-items: center;
     padding: 20px;
     justify-content: space-between;
+    width: 100%; /* Ensures nav spans the full width of the viewport */
 }
 
 .logo-placeholder {
@@ -52,32 +65,29 @@ nav {
     background-color: #ddd; /* Light grey background on hover */
     color: #222; /* Darker text on hover */
 }
+
+/* Container for content alignment */
+.content-wrapper {
+    max-width: 800px; /* Increase max width for wider viewport */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px; /* Adds padding inside the container for some breathing room */
+}
+
+/* Apply consistent styling across all sections */
 section {
     padding: 50px 20px; /* Adjust padding to ensure text is nicely spaced */
     margin: 0; /* Removes any default margin */
     text-align: center;
     position: relative;
-    overflow: hidden; /* Prevents any overflow from the SVG affecting layout */
-}
-
-section::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0; /* Ensures it spans the entire width */
-    height: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg width='100%' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 10 0, 20 10 T 40 10 T 60 10 T 80 10 T 100 10 T 120 10' fill='none' stroke='%239400d3' stroke-width='5'/%3E%3C/svg%3E");
-    background-size: cover; /* Ensures the SVG covers the full area without repeating */
-    background-repeat: repeat-x; /* Allows the pattern to repeat across the x-axis */
+    border-bottom: 1px solid #ccc; /* Adds a subtle border between sections */
 }
 
 .content-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 600px; /* Same width as button grid */
-    margin: 0 auto; /* Centering the row */
+    max-width: 800px; /* Same width as button grid */
+    margin: 0 auto 20px auto; /* Centering the row */
 }
 
 .icon-row {
@@ -103,15 +113,16 @@ section::after {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
-    max-width: 600px;
+    max-width: 800px; /* Increase max width for wider grid */
     margin: 20px auto;
 }
 
 .grid-button {
-    padding: 20px;
+    padding: 30px 20px; /* Increase padding for wider buttons */
     background-color: #800080;
     color: white;
-    font-size: 18px;
+    font-size: 22px; /* Increase font size */
+    font-weight: bold; /* Make font bold */
     border: none;
     border-radius: 15px;
     transition: background-color 0.3s;
@@ -119,4 +130,29 @@ section::after {
 
 .grid-button:hover {
     background-color: #9932cc;
+}
+
+/* How to Buy Steps */
+.buy-step {
+    background-color: #800080;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px 0;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 15px;
+    color: white;
+}
+
+.buy-step:hover {
+    background-color: #440b44;
+    border-color: #ccc;
+}
+
+.buy-step h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.buy-step p {
+    font-size: 18px;
 }
