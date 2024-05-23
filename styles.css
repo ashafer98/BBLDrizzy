@@ -2,56 +2,93 @@ body {
     font-family: Georgia, serif;
     margin: 0;
     padding: 0;
-    background-color: #f4c2e8;
+    background-color: #f4c2e8; /* Light purple background */
 }
 
 nav {
     background-color: #333;
-    text-align: center;
-    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-between;
 }
 
-.nav-button {
+.logo-placeholder {
+    color: white;
+    font-size: 24px;
+    margin-right: 30px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.nav-link {
     color: white;
     padding: 12px 24px;
-    margin: 0 10px;
     text-decoration: none;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
     font-family: Georgia, serif;
+    transition: color 0.3s;
 }
 
-.nav-button:hover {
-    background-color: #0056b3;
+.nav-link:hover {
     color: #ddd;
 }
 
+.buy-now-button {
+    padding: 12px 24px;
+    background-color: white; /* Makes the button white */
+    color: #333; /* Text color */
+    text-decoration: none;
+    font-family: Georgia, serif;
+    font-weight: bold; /* Makes the text bold */
+    border-radius: 5px; /* Rounded corners for the button */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.buy-now-button:hover {
+    background-color: #ddd; /* Light grey background on hover */
+    color: #222; /* Darker text on hover */
+}
 section {
-    padding: 50px;
-    margin-top: 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 50px 20px; /* Adjust padding to ensure text is nicely spaced */
+    margin: 0; /* Removes any default margin */
     text-align: center;
+    position: relative;
+    overflow: hidden; /* Prevents any overflow from the SVG affecting layout */
+}
+
+section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; /* Ensures it spans the entire width */
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 10 0, 20 10 T 40 10 T 60 10 T 80 10 T 100 10 T 120 10' fill='none' stroke='%239400d3' stroke-width='5'/%3E%3C/svg%3E");
+    background-size: cover; /* Ensures the SVG covers the full area without repeating */
+    background-repeat: repeat-x; /* Allows the pattern to repeat across the x-axis */
 }
 
 .content-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start; /* Aligns content to the left */
-    margin-bottom: 20px; /* Ensures space between icons and button grid */
+    max-width: 600px; /* Same width as button grid */
+    margin: 0 auto; /* Centering the row */
+}
+
+.icon-row {
+    display: flex; /* Icons in a horizontal row */
+    flex-grow: 1; /* Takes up available space */
 }
 
 .image-placeholder {
     width: 100px;
     height: 100px;
     background-color: #ccc;
-    margin-right: 20px;
-}
-
-.icon-row {
-    display: flex;
-    justify-content: flex-start; /* Left-aligns the icons */
 }
 
 .round-icon {
@@ -59,27 +96,27 @@ section {
     height: 40px;
     background-color: #800080;
     border-radius: 50%;
-    margin: 0 5px;
+    margin-right: 5px; /* Spacing between icons */
 }
 
 .button-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates three columns */
-    grid-gap: 20px; /* Increases the gap for better spacing */
-    max-width: 600px; /* Adjusts the maximum width of the grid */
-    margin: 20px auto; /* Centers the grid and adds vertical spacing */
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    max-width: 600px;
+    margin: 20px auto;
 }
 
 .grid-button {
-    padding: 20px; /* Increases padding for larger buttons */
+    padding: 20px;
     background-color: #800080;
     color: white;
-    font-size: 18px; /* Increases font size for better readability */
+    font-size: 18px;
     border: none;
-    border-radius: 15px; /* More rounded edges */
+    border-radius: 15px;
     transition: background-color 0.3s;
 }
 
 .grid-button:hover {
-    background-color: #9932cc; /* A brighter purple on hover */
+    background-color: #9932cc;
 }
