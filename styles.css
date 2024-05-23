@@ -1,0 +1,85 @@
+body {
+    font-family: Georgia, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4c2e8;
+}
+
+nav {
+    background-color: #333;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.nav-button {
+    color: white;
+    padding: 12px 24px;
+    margin: 0 10px;
+    text-decoration: none;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: Georgia, serif;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+    color: #ddd;
+}
+
+section {
+    padding: 50px;
+    margin-top: 20px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.content-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligns content to the left */
+    margin-bottom: 20px; /* Ensures space between icons and button grid */
+}
+
+.image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    margin-right: 20px;
+}
+
+.icon-row {
+    display: flex;
+    justify-content: flex-start; /* Left-aligns the icons */
+}
+
+.round-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #800080;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+    grid-gap: 20px; /* Increases the gap for better spacing */
+    max-width: 600px; /* Adjusts the maximum width of the grid */
+    margin: 20px auto; /* Centers the grid and adds vertical spacing */
+}
+
+.grid-button {
+    padding: 20px; /* Increases padding for larger buttons */
+    background-color: #800080;
+    color: white;
+    font-size: 18px; /* Increases font size for better readability */
+    border: none;
+    border-radius: 15px; /* More rounded edges */
+    transition: background-color 0.3s;
+}
+
+.grid-button:hover {
+    background-color: #9932cc; /* A brighter purple on hover */
+}
