@@ -14,3 +14,5 @@ function generateLyric() {
     const randomIndex = Math.floor(Math.random() * lyrics.length);
     document.getElementById('lyric-display').textContent = lyrics[randomIndex];
 }
+
+}

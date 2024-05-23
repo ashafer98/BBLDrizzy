@@ -5,7 +5,6 @@ html, body {
     overflow-x: hidden; /* Hide horizontal scrollbar if not needed */
     overflow-y: auto; /* Enable vertical scrolling */
     background-color: #f4c2e8; /* Light purple background */
-}
 
 body {
     font-family: Georgia, serif;
@@ -82,6 +81,19 @@ section {
     border-bottom: 1px solid #ccc; /* Adds a subtle border between sections */
 }
 
+section::after {
+    content: '';
+    display: block;
+    width: 100vw; /* Ensure the width spans the entire viewport width */
+    height: 20px;
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100%" height="20" viewBox="0 0 120 20"%3E%3Cpath d="M0 10 Q 10 0, 20 10 T 40 10 T 60 10 T 80 10 T 100 10 T 120 10" fill="none" stroke="%23800080" stroke-width="2" /%3E%3C/svg%3E') repeat-x;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
 .content-row {
     display: flex;
     justify-content: space-between;
@@ -95,10 +107,11 @@ section {
     flex-grow: 1; /* Takes up available space */
 }
 
-.image-placeholder {
+.image-placeholder, .home-image {
     width: 100px;
     height: 100px;
     background-color: #ccc;
+    margin-left: 10px; /* Space between icons and image */
 }
 
 .round-icon {
@@ -131,6 +144,84 @@ section {
 .grid-button:hover {
     background-color: #9932cc;
 }
+
+/* Button specific styles for Gemini, Binance, Crypto.com, HTX, Bybit, OKX, Coinbase Wallet, KuCoin, and Uniswap */
+.gemini-button, .binance-button, .crypto-com-button, .htx-button, .bybit-button, .okx-button, .coinbase-wallet-button, .kucoin-button, .uniswap-button {
+    padding: 20px; /* Adjust padding to fit text size */
+    overflow: hidden; /* Hide overflow */
+    position: relative; /* Needed for absolute positioning of text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gemini-button img.button-image, 
+.binance-button img.button-image, 
+.crypto-com-button img.button-image, 
+.htx-button img.button-image,
+.bybit-button img.button-image,
+.okx-button img.button-image,
+.coinbase-wallet-button img.button-image,
+.kucoin-button img.button-image,
+.uniswap-button img.button-image {
+    width: 50px; /* Adjust width to fit text size */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    transition: opacity 0.3s;
+}
+
+.gemini-button .button-text, 
+.binance-button .button-text, 
+.crypto-com-button .button-text, 
+.htx-button .button-text,
+.bybit-button .button-text,
+.okx-button .button-text,
+.coinbase-wallet-button .button-text,
+.kucoin-button .button-text,
+.uniswap-button .button-text {
+    position: absolute;
+    top: 50%; /* Center the text vertically */
+    left: 50%; /* Center the text horizontally */
+    transform: translate(-50%, -50%); /* Adjust for exact centering */
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    opacity: 0; /* Start with text hidden */
+    transition: opacity 0.3s;
+}
+
+.gemini-button:hover img.button-image, 
+.binance-button:hover img.button-image, 
+.crypto-com-button:hover img.button-image, 
+.htx-button:hover img.button-image,
+.bybit-button:hover img.button-image,
+.okx-button:hover img.button-image,
+.coinbase-wallet-button:hover img.button-image,
+.kucoin-button:hover img.button-image,
+.uniswap-button:hover img.button-image {
+    opacity: 0; /* Hide image on hover */
+}
+
+.gemini-button:hover .button-text, 
+.binance-button:hover .button-text, 
+.crypto-com-button:hover .button-text, 
+.htx-button:hover .button-text,
+.bybit-button:hover .button-text,
+.okx-button:hover .button-text,
+.coinbase-wallet-button:hover .button-text,
+.kucoin-button:hover .button-text,
+.uniswap-button:hover .button-text {
+    opacity: 1; /* Show text on hover */
+}
+
+
+
+
+
+
+
+
+
 
 /* How to Buy Steps */
 .buy-step {
