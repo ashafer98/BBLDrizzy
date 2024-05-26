@@ -1,0 +1,210 @@
+<div class="container">
+    <img id="gremlins-img" src="../../../assets/elgatodiablo/elgatodiabloGIF.webp" alt="logo" width="95%" height="180vh"
+        style="object-fit: contain;" /><br><br>
+    <h6 style="font-weight: bold; "><u>El Gato Diablo</u> </h6>
+
+    <p>
+        **Estimated mint date March 7th** <br>
+        <button id="navbar-text" class="styled"> <a href="https://opensea.io/collection/elgatodiablo">View
+                Opensea</a></button> &nbsp;
+
+        <button id="navbar-text" class="styled"> <a
+                href="https://etherscan.io/address/0xa8b62866020970943de4f0e6fc4acf3e31636346#code">View
+                Contract </a></button>
+        <br>
+        At the request of our community based off the original design of the genesis DevilCatz collection.
+        <br>
+    </p>
+
+    <p>El Gato Diablo is a cartoon collection of mischievous yet endearing group of cats. These feline characters are
+        known for their devilish antics and often find themselves causing chaos and trouble for their human owners.
+        However, despite their naughty behavior, they always manage to win over their audiences with their lovable
+        personalities and humorous adventures. From elaborate schemes to simple pranks, the El Gato Diablo cats are sure
+        to keep you on your paws with their hilarious and unpredictable antics.</p>
+
+    <div *ngIf="this.userAddress == '' && !this.isLoading">
+        <p>Login!</p>
+        <br>
+        <button (click)="connectMetaMask()" style="margin: 50px; margin-top: 20px;" *ngIf="this.userAddress == ''"
+            class="styled">
+            Login
+        </button>
+
+        <div *ngIf="this.error">
+            <br>
+
+            <button class="styled" style="max-width: fit-content;" (click)="clearError()">{{error}}</button>
+
+
+            <br><br><br><br>
+        </div>
+
+    </div>
+
+    <div class="row" id="centered">
+
+
+        <div *ngIf="this.userAddress != '' && !this.isLoading">
+            <p> Welcome {{this.userAddress}}</p>
+            You own = {{this.gatoDiabloOwned}} El Gato Diablo NFT's! <br>
+            You own = {{this.$toonInWallet}} <img id="center-img" src="../../../assets/toonverse/catCoin.gif" alt="logo"
+                height="25vh" width="25" /> $TOON!
+
+            <hr>
+
+            <h3 *ngIf="isPaused"> <b>Minting is Currently Paused!</b></h3>
+            <h3 *ngIf="!isPaused"> <b>Minting is Open!</b></h3>
+
+        </div>
+
+
+
+
+        <div class="col-lg-3">
+            <div class="card-body" id="styled">
+
+                <img id="gato-img" src="../../../assets/elgatodiablo/preReveal.png" alt="logo" width="95%"
+                    height="180vh" style="object-fit: contain;" /><br><br>
+                <b> Public Mint:</b> <br>
+                Public sale is .04 ETH. Buy a devilcat, stake a devilcat, or buy $TOON for a better deal.
+
+                <div *ngIf="this.userAddress != '' && !this.isLoading">
+                    <br>
+
+                    <br>
+                    public mint price: {{publicMintPrice}}
+
+
+                    <br>
+                    <br>
+                    selected : {{publicMintAmountSelected}}
+                    <br>
+                    <br>
+                    total price : ETH {{publicMintTotalPrice}}
+                    <br><br>
+                    <mdb-range (ngModelChange)="updatePublicMintPrice($event)" [min]="1" [max]="50"
+                        ngModel="publicMintAmountSelected"></mdb-range>
+                    <button *ngIf="!isPaused" (click)="mintWithEth()" class="styled">
+                        Mint
+                    </button>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card-body" id="styled">
+
+                <img id="gato-img" src="../../../assets/elgatodiablo/306.png" alt="logo" width="95%" height="180vh"
+                    style="object-fit: contain;" /><br><br>
+                <b>DevilCatz Owners Mint:</b>
+                <br>Any wallet with at least 1 DevilCat can mint two at .02 ETH each.
+
+                <div *ngIf="this.userAddress != '' && !this.isLoading">
+                    <br><br>
+                    discount mint price: {{discountMintPrice}} ETH
+
+
+                    <br>
+                    <br>
+                    selected : {{ownersMintAmountSelected}}
+                    <br>
+                    <br>
+                    total price : ETH {{ownersMintTotalPrice}}
+                    <br><br>
+                    <mdb-range (ngModelChange)="updateOwnersMintPrice($event)" [min]="1" [max]="2"
+                        ngModel="ownersMintAmountSelected"></mdb-range>
+                    <button *ngIf="!isPaused" (click)="mintWithEth()" class="styled">
+                        Mint
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card-body" id="styled">
+
+                <img id="gato-img" src="../../../assets/elgatodiablo/305.png" alt="logo" width="95%" height="180vh"
+                    style="object-fit: contain;" /><br><br>
+
+                <b> DevilCatz Stakers Mint:</b> <br>
+                Any wallet with a staked DevilCat can mint unlimited at .02 ETH each.
+                <div *ngIf="this.userAddress != '' && !this.isLoading">
+                    <br><br>
+                    discount mint price: {{discountMintPrice}} ETH
+
+
+                    <br>
+                    <br>
+                    selected : {{stakersMintAmountSelected}}
+                    <br>
+                    <br>
+                    total price : ETH {{stakersMintTotalPrice}}
+                    <br><br>
+                    <mdb-range (ngModelChange)="updateStakersMintPrice($event)" [min]="1" [max]="50"
+                        ngModel="publicMintAmountSelected"></mdb-range>
+                    <button *ngIf="!isPaused" (click)="mintWithEth()" class="styled">
+                        Mint
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card-body" id="styled">
+
+                <img id="gato-img" src="../../../assets/elgatodiablo/309.png" alt="logo" width="95%" height="180vh"
+                    style="object-fit: contain;" /><br><br>
+                <b> 100 $TOON mint: </b> <br>
+                Each wallet can mint with 100 $TOON each.Two mints per wallet. Only 350 will be minted with $TOON.
+                <div *ngIf="this.userAddress != '' && !this.isLoading">
+                    <br>
+
+                    $TOON Price: {{toonMintCost}}
+
+
+                    <br>
+                    <br>
+                    selected : {{toonMintAmountSelected}}
+                    <br>
+                    <br>
+                    total price : <img id="center-img" src="../../../assets/toonverse/catCoin.gif" alt="logo"
+                        height="25vh" width="25" /> {{toonMintTotalPrice}}
+                    <br><br>
+                    <mdb-range (ngModelChange)="updateToonPrice($event)" [min]="1" [max]="2"
+                        ngModel="toonMintAmountSelected"></mdb-range>
+                    <button *ngIf="(toonMintTotalPrice <= this.$toonInWallet) && (!isPaused)" (click)="mintWithToon()"
+                        class="styled">
+                        Mint
+                    </button>
+
+                    <p *ngIf="toonMintTotalPrice > this.$toonInWallet"> To many selected </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="this.isLoading">
+        <div>
+            <img id="center-img" src="../../../assets/toonverse/catCoin.gif" alt="logo" height="200vh" width="150" />
+            <span class="visually-hidden">...</span>
+        </div>
+        <br />
+        <p style="font-size: 1.25em;">Please finish transaction <br> or <br>wait for blockchain to confirm...
+            <br>
+            The page will refresh on its own.
+        </p>
+        <br />
+    </div>
+    <hr>
+    <div class="container">
+        <br>
+    </div>
+</div>

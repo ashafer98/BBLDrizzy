@@ -1,0 +1,215 @@
+#styledText {
+
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  padding: 1%;
+}
+#styledText:hover {
+  transform: scale(1.05);
+
+text-decoration: underline;
+}
+
+
+#styled-mint-button {
+  margin-bottom: 4px;
+  border: 0;
+  line-height: 2.5;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: black;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: pink;  
+}
+
+#styled-mint-button:hover {
+  box-shadow: inset 2px 2px 3px pink, inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+
+
+
+
+.yellowHighlight{
+  
+    background-color: Yellow;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#center-img {
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  transition: 0.5s all ease-in-out;
+
+}
+
+#center-img:hover{
+  transform: scale(1.25);
+}
+
+#center-img-gif {
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  transition: 0.5s all ease-in-out;
+
+}
+
+#center-img-gif:hover{
+  transform: scale(1.05);
+}
+
+
+
+#card-free-mints{
+  background-color: aliceblue;
+  border-radius: 5%;
+  border: 1mm ridge pink;
+  
+  // max-width: 60%;
+
+}
+
+#card-free-mints:hover{
+  background-color: bisque;
+  border-radius: 5%;
+  // max-width: 70%;
+  text-decoration: underline;
+  border: 1mm ridge pink;
+
+}
+
+#card-mintDevilCat{
+  background-color: aliceblue;
+  border-radius: 5%;
+  max-width: 555px;
+  border: 1mm ridge pink;
+}
+
+// #card-mintDevilCat:hover{
+//   background-color: bisque;
+//   border-radius: 5%;
+//   max-width: 650px;
+//   text-decoration: underline;
+
+// }
+
+#card-freeMint{
+  background-color: aliceblue;
+  border-radius: 5%;
+  max-width: 85%;
+  border: 1mm ridge pink;
+}
+
+
+#card-freeMint:hover{
+  background-color: bisque;
+  border-radius: 5%;
+  transform: scale(1.05);
+  text-decoration: underline;
+
+}
+
+#card-free-mints:hover img{
+  transform: scale(1.25);
+
+
+}
+
+#gremlins-img {
+  // max-width: 100%;
+  // max-height: 100%;
+  // object-fit: contain;
+  // padding: 3px;
+  transition: 0.5s all ease-in-out;
+
+}
+
+.test{
+  word-break: normal;
+}
+
+
+#gremlins-img:hover{
+  transform: scale(1.05);
+}
+
+#card-gremlins {
+background-color: #666;
+
+}
+#card-cloudz {
+  background-color: #666;
+  
+  }
+
+#cloudz-img {
+  // max-width: 100%;
+  // max-height: 100%;
+  // object-fit: contain;
+  // padding: 3px;
+  transition: 0.5s all ease-in-out;
+
+}
+
+
+#cloudz-img:hover{
+  transform: scale(1.05);
+}
+
+#text:hover{
+  text-decoration: underline;
+  transform: scale(1.05);
+
+
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  // grid-gap: 20px;
+  padding: 20px;
+}
+
+
+.grid-item {
+  // background-color: white;
+  // border: 1px solid #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#styled-mint-button {
+  margin-bottom: 4px;
+  border: 0;
+  line-height: 2.5;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: black;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: pink;  
+}
+
+#styled-mint-button:hover {
+  box-shadow: inset 2px 2px 3px pink, inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+#table{
+  justify-content: center; padding: 15px;background-color: aliceblue;
+}
+
+#table:hover{
+  background-color: bisque;
+}
