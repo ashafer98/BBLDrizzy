@@ -1,11 +1,15 @@
-
-#styledText:hover {
-  transform: scale(1.05);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-//text-decoration: underline;
+.center-div {
+  display: grid;
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #ffe4e1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #styled-mint-button {
+  display: inline-block;
   margin-bottom: 4px;
   border: 0;
   line-height: 2.5;
@@ -18,110 +22,118 @@
   background-color: pink;  
 }
 
+#styled-mint-button a {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  line-height: inherit;
+}
+
 #styled-mint-button:hover {
   box-shadow: inset 2px 2px 3px pink, inset -2px -2px 3px rgba(0, 0, 0, 0.6);
-}
-
-#center-img {
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
-  transition: 0.5s all ease-in-out;
-}
-
-#center-img:hover{
-  transform: scale(1.25);
-}
-
-#center-img-gif {
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
-  transition: 0.5s all ease-in-out;
-}
-
-#center-img-gif:hover{
   transform: scale(1.05);
 }
 
-
-//chatgpt added anya below
-
-
 body {
   font-family: 'Comic Sans MS', cursive, sans-serif;
-  padding: 0px;
+  padding: 0;
   margin: 0;
 }
 
 .roadmap-title {
   text-align: center;
-  font-size: 5rem; /* Adjust the font size as needed */
-  color: pink; /* Match the color theme */
-  background-color: #fbf1e6; /* Matching background color */
-  padding: 20px 20px; /* Padding for better appearance */
-  margin-bottom: 0px; /* Add some space below the heading */
+  font-size: 5rem;
+  color: #ff1493;
+  padding: 10px 20px;
+  margin-bottom: 0;
 }
 
 .roadmap {
   display: flex;
-  flex-direction: column; /* Changed to column for mobile */
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: #fbf1e6; /* Added background color */
-  padding: 20px; /* Added padding */
+  padding: 20px;
 }
+
 .phase {
-  width: 100%; /* Changed to 100% for mobile */
-  margin-bottom: 20px; /* Added margin-bottom for spacing */
+  width: 100%;
+  margin-bottom: 20px;
   background-color: #fff0f5;
   padding: 20px;
   border: 2px solid #ff69b4;
   border-radius: 10px;
-  box-shadow: 5px 5px 0 pink;
+  box-shadow: 5px 5px 0 #ff1493;
   position: relative;
   z-index: 1;
 }
+
 .phase h2 {
   text-align: center;
-  color: pink;
+  color: #ff1493;
 }
+
 .phase p {
   margin: 10px 0;
 }
+
 .path {
-  display: none; /* Hide the path on mobile */
+  display: none;
 }
-@media (min-width: 768px) {
+
+@media (max-width: 768px) {
+  .center-div {
+    padding: 10px;
+    max-width: 90%;
+  }
+
+  .roadmap-title {
+    font-size: 1.5rem;
+    padding: 8px 16px;
+  }
+
   .roadmap {
-      flex-direction: row; /* Change to row for larger screens */
+    padding: 10px;
   }
+
   .phase {
-      width: 30%; /* Restore the width for larger screens */
-      margin-bottom: 0; /* Remove the margin-bottom for larger screens */
+    padding: 15px;
+    border: 1px solid #ff69b4;
+    box-shadow: 3px 3px 0 #ff1493;
   }
-  .path {
-      display: block; /* Show the path on larger screens */
-      position: absolute;
-      width: calc(100% - 80px);
-      height: 2px;
-      background-color: #ff69b4;
-      top: 50%;
-      left: 40px;
-      z-index: 0;
+}
+
+@media (max-width: 480px) {
+  .center-div {
+    padding: 5px;
+    max-width: 95%;
   }
-  .path::before, .path::after {
-      content: '❀';
-      position: absolute;
-      top: -10px;
-      font-size: 20px;
-      color: #fbf1e6;
+
+  .roadmap-title {
+    font-size: 1.2rem;
+    padding: 6px 12px;
   }
-  .path::before {
-      left: 0;
+
+  .roadmap {
+    padding: 5px;
   }
-  .path::after {
-      right: 0;
+
+  .phase {
+    padding: 10px;
+    border: 1px solid #ff69b4;
+    box-shadow: 2px 2px 0 #ff1493;
   }
+
+  #styled-mint-button {
+    font-size: 0.9rem;
+    padding: 0 15px;
+  }
+}
+
+#text:hover {
+  text-decoration: underline;
+  transform: scale(1.05);
 }

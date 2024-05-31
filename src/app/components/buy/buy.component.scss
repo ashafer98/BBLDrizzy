@@ -1,22 +1,36 @@
 
 
 .card-body {
-    width: 50%;
-    margin-bottom: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 275px;
-    border: 0;
-    color: black;
-    text-shadow: 1px 1px 1px #000;
-    border-radius: 10px;
-    background-color: aliceblue;
-    border: 1mm ridge pink;
-  
+  width: 80%;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 275px;
+  border: 0;
+  color: black;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: aliceblue;
+  border: 1mm ridge pink;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.card-body:hover {
+  background-color: bisque;
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    width: 90%;
+    min-height: 200px;
   }
-  
-  .card-body:hover {
-    background-color: bisque;
-    transform: scale(1.05);
-    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .card-body {
+    width: 95%;
+    min-height: 150px;
   }
+}
