@@ -1,15 +1,9 @@
-#styledText {
 
-  text-shadow: 1px 1px 1px #000;
-  border-radius: 10px;
-  padding: 1%;
-}
 #styledText:hover {
   transform: scale(1.05);
-
-text-decoration: underline;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+//text-decoration: underline;
 }
-
 
 #styled-mint-button {
   margin-bottom: 4px;
@@ -28,27 +22,11 @@ text-decoration: underline;
   box-shadow: inset 2px 2px 3px pink, inset -2px -2px 3px rgba(0, 0, 0, 0.6);
 }
 
-
-
-
-
-.yellowHighlight{
-  
-    background-color: Yellow;
-    display: grid;
-    justify-content: center;
-    justify-items: center;
-    max-width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 #center-img {
   justify-content: center;
   align-items: center;
   vertical-align: middle;
   transition: 0.5s all ease-in-out;
-
 }
 
 #center-img:hover{
@@ -60,7 +38,6 @@ text-decoration: underline;
   align-items: center;
   vertical-align: middle;
   transition: 0.5s all ease-in-out;
-
 }
 
 #center-img-gif:hover{
@@ -68,148 +45,83 @@ text-decoration: underline;
 }
 
 
+//chatgpt added anya below
 
-#card-free-mints{
-  background-color: aliceblue;
-  border-radius: 5%;
-  border: 1mm ridge pink;
-  
-  // max-width: 60%;
 
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  padding: 0px;
+  margin: 0;
 }
 
-#card-free-mints:hover{
-  background-color: bisque;
-  border-radius: 5%;
-  // max-width: 70%;
-  text-decoration: underline;
-  border: 1mm ridge pink;
-
-}
-
-#card-mintDevilCat{
-  background-color: aliceblue;
-  border-radius: 5%;
-  max-width: 555px;
-  border: 1mm ridge pink;
-}
-
-// #card-mintDevilCat:hover{
-//   background-color: bisque;
-//   border-radius: 5%;
-//   max-width: 650px;
-//   text-decoration: underline;
-
-// }
-
-#card-freeMint{
-  background-color: aliceblue;
-  border-radius: 5%;
-  max-width: 85%;
-  border: 1mm ridge pink;
-}
-
-
-#card-freeMint:hover{
-  background-color: bisque;
-  border-radius: 5%;
-  transform: scale(1.05);
-  text-decoration: underline;
-
-}
-
-#card-free-mints:hover img{
-  transform: scale(1.25);
-
-
-}
-
-#gremlins-img {
-  // max-width: 100%;
-  // max-height: 100%;
-  // object-fit: contain;
-  // padding: 3px;
-  transition: 0.5s all ease-in-out;
-
-}
-
-.test{
-  word-break: normal;
-}
-
-
-#gremlins-img:hover{
-  transform: scale(1.05);
-}
-
-#card-gremlins {
-background-color: #666;
-
-}
-#card-cloudz {
-  background-color: #666;
-  
-  }
-
-#cloudz-img {
-  // max-width: 100%;
-  // max-height: 100%;
-  // object-fit: contain;
-  // padding: 3px;
-  transition: 0.5s all ease-in-out;
-
-}
-
-
-#cloudz-img:hover{
-  transform: scale(1.05);
-}
-
-#text:hover{
-  text-decoration: underline;
-  transform: scale(1.05);
-
-
-}
-
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  // grid-gap: 20px;
-  padding: 20px;
-}
-
-
-.grid-item {
-  // background-color: white;
-  // border: 1px solid #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#styled-mint-button {
-  margin-bottom: 4px;
-  border: 0;
-  line-height: 2.5;
-  padding: 0 20px;
-  font-size: 1rem;
+.roadmap-title {
   text-align: center;
-  color: black;
-  text-shadow: 1px 1px 1px #000;
+  font-size: 5rem; /* Adjust the font size as needed */
+  color: pink; /* Match the color theme */
+  background-color: #fbf1e6; /* Matching background color */
+  padding: 20px 20px; /* Padding for better appearance */
+  margin-bottom: 0px; /* Add some space below the heading */
+}
+
+.roadmap {
+  display: flex;
+  flex-direction: column; /* Changed to column for mobile */
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background-color: #fbf1e6; /* Added background color */
+  padding: 20px; /* Added padding */
+}
+.phase {
+  width: 100%; /* Changed to 100% for mobile */
+  margin-bottom: 20px; /* Added margin-bottom for spacing */
+  background-color: #fff0f5;
+  padding: 20px;
+  border: 2px solid #ff69b4;
   border-radius: 10px;
-  background-color: pink;  
+  box-shadow: 5px 5px 0 pink;
+  position: relative;
+  z-index: 1;
 }
-
-#styled-mint-button:hover {
-  box-shadow: inset 2px 2px 3px pink, inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+.phase h2 {
+  text-align: center;
+  color: pink;
 }
-
-#table{
-  justify-content: center; padding: 15px;background-color: aliceblue;
+.phase p {
+  margin: 10px 0;
 }
-
-#table:hover{
-  background-color: bisque;
+.path {
+  display: none; /* Hide the path on mobile */
+}
+@media (min-width: 768px) {
+  .roadmap {
+      flex-direction: row; /* Change to row for larger screens */
+  }
+  .phase {
+      width: 30%; /* Restore the width for larger screens */
+      margin-bottom: 0; /* Remove the margin-bottom for larger screens */
+  }
+  .path {
+      display: block; /* Show the path on larger screens */
+      position: absolute;
+      width: calc(100% - 80px);
+      height: 2px;
+      background-color: #ff69b4;
+      top: 50%;
+      left: 40px;
+      z-index: 0;
+  }
+  .path::before, .path::after {
+      content: '❀';
+      position: absolute;
+      top: -10px;
+      font-size: 20px;
+      color: #fbf1e6;
+  }
+  .path::before {
+      left: 0;
+  }
+  .path::after {
+      right: 0;
+  }
 }
