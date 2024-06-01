@@ -9,6 +9,8 @@ body {
   // -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 }
 
 .main {
@@ -125,7 +127,7 @@ h4,
 h5,
 h6 {
   color: black;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1em;
   font-size: min(6vw, 35px);
 
@@ -134,13 +136,13 @@ h6 {
 }
 
 button {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 
 
 p {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: black;
   // word-break: normal;
   word-break: break-word;
@@ -320,33 +322,6 @@ p {
 
 }
 
-
-#gremlins-img:hover{
-  transform: scale(1.25);
-}
-
-#card-gremlins {
-background-color: #666;
-
-}
-#card-cloudz {
-  background-color: #666;
-  
-  }
-
-#cloudz-img {
-  // max-width: 100%;
-  // max-height: 100%;
-  // object-fit: contain;
-  // padding: 3px;
-  transition: 0.5s all ease-in-out;
-
-}
-
-
-#cloudz-img:hover{
-  transform: scale(1.25);
-}
 
 
 

@@ -3,9 +3,9 @@
   padding: 20px;
   max-width: 1000px;
   margin: auto;
-  background-color: #ffe4e1;
+  //background-color: #ffe4e1;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #styled-mint-button {
@@ -19,7 +19,7 @@
   color: black;
   text-shadow: 1px 1px 1px #000;
   border-radius: 10px;
-  background-color: pink;  
+  background-color: ffe4e1;  
 }
 
 #styled-mint-button a {
@@ -37,7 +37,7 @@
 }
 
 body {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -136,4 +136,20 @@ body {
 #text:hover {
   text-decoration: underline;
   transform: scale(1.05);
+}
+
+.social-media-icons {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+#twitter-icon img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+#twitter-icon img:hover {
+  transform: scale(1.2);
 }
