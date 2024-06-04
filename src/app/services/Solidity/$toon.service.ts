@@ -21,7 +21,7 @@ provider.eth.setProvider(Web3.givenProvider);
 
 const $toonCoinContract = new provider.eth.Contract(
   (contract),
-  "0x61DED8A72cDc7762D159ab46bE880BE7127A2DeF"
+  "0x61DED8A72cDc7762D159ab46bE880BE7127A2DeF" //0xdcbadc585a2b0216c2fe01482aff29b37ffbc119
 );
 
 

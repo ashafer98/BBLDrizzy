@@ -1,3 +1,5 @@
+run ng build - //so it compiles dist folder
+
 In WINDOWS CLI 
 cd C:\Users\anyas\BBLDrizzy\dist\angular-app-tdd
 then run
