@@ -6,3 +6,9 @@ then run
 aws s3 sync . s3://bbldrizzy --delete
 (sync to bucket from here is what this says.)
 
+
+throw a way coinbase wallet
+jelly town leader obtain drip habit future pistol clinic can fruit world
+
+
+

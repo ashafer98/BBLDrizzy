@@ -1,7 +1,7 @@
 <div class="card-body" id="styled">
 
-    <div class="p-3"> 
-        <p>Buy BBLD</p> 
+    <div class="p-3">
+        <p>Buy BBLD</p>
         <img id="center-img" src="../../../assets\bbld\coin.gif" alt="logo" height="300vh" width="250" />
         <br>
         BBLD Price in Eth: {{priceInEth}} ETH
@@ -10,7 +10,7 @@
         <!-- amount you can claim. -->
         <br>
         <br>
-        Selected : {{purchaseAmount}} BBLD 
+        Selected : {{purchaseAmount}} BBLD
         <br>
         <br>
 
@@ -23,41 +23,52 @@
 
         <br>
         <input type="number" class="text-field w-input" max="100000" maxlength="256" name="email" data-name="Email"
-        placeholder="" id="mint-quantity" required="" [ngModel]="purchaseAmount" type="number"
-        (ngModelChange)="updatePublicEthPrice($event)" min="0" max="100000" step="1"
-        onfocus="this.previousValue = this.value"
-        onkeydown="if(event.key==='.'){event.preventDefault();} this.previousValue =this.value"
-        placeholder="Amount To Buy">
+            placeholder="" id="mint-quantity" required="" [ngModel]="purchaseAmount" type="number"
+            (ngModelChange)="updatePublicEthPrice($event)" min="0" max="100000" step="1"
+            onfocus="this.previousValue = this.value"
+            onkeydown="if(event.key==='.'){event.preventDefault();} this.previousValue =this.value"
+            placeholder="Amount To Buy">
 
 
 
-        <br>
-        <br>
+    
 
-        Total price :  {{purchasePriceTotal}} ETH
-        <br><br>
-        Total price :  ${{purchasePriceTotalDollars}} USD
-
-        <br>
-        <br>
-        <br>
-
-        <button *ngIf="!isLoading" (click)="purchaseToonForEth()"
-        class="styled">
-        Purchase
-    </button>
-
-    <div *ngIf="this.isLoading">
-        <div>
-            <img id="center-img" src="../../../assets/bbld\Main_Logo.png" alt="logo" height="200vh" width="150" />
-            <span class="visually-hidden">...</span>
-        </div>
-        <br />
-        <p style="font-size: 1.25em;">Please finish transaction <br> or <br>wait for blockchain to confirm...
+        <div *ngIf="!isLoading && this.priceInEth == 0">
             <br>
-            The page will refresh on its own.
-        </p>
-        <br />
-    </div>
+            <p>Not connected to a web3 browser!
+                <br> Please connect to Web3 browser like metamask or coinbase to login
+            </p>
+            <button (click)="login()" class="styled">
+                Connect
+            </button>
+
+        </div>
+
+        <div *ngIf="!isLoading && this.priceInEth > 0">
+            Total price : {{purchasePriceTotal}} ETH
+            <br><br>
+            Total price : ${{purchasePriceTotalDollars}} USD
+            <br><br>
+            <button *ngIf="!isLoading && this.priceInEth > 0" (click)="purchase()" class="styled">
+                Purchase
+            </button>
+
+        </div>
+
+
+
+
+        <div *ngIf="this.isLoading">
+            <div>
+                <img id="center-img" src="../../../assets/bbld\Main_Logo.png" alt="logo" height="200vh" width="150" />
+                <span class="visually-hidden">...</span>
+            </div>
+            <br />
+            <p style="font-size: 1.25em;">Please finish transaction <br> or <br>wait for blockchain to confirm...
+                <br>
+                The page will refresh on its own.
+            </p>
+            <br />
+        </div>
     </div>
 </div>

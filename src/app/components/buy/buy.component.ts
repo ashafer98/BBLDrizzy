@@ -38,16 +38,21 @@ export class BuyComponent implements OnInit {
 		this.priceInEth = Number(Web3.utils.fromWei(await bbldContract.methods.cost().call(), 'ether'))
     this.purchasePriceTotal = this.priceInEth * this.purchaseAmount
 
-    //CALL API HERE TO get what 1ETH to $$ is equal too
-    //times that buy this.purchasePriceTotal
-    // and make it purchasepriceTotalIndollars
+
+  }
+
+  async login() {
+		// this.priceInEth = Number(Web3.utils.fromWei(await bbldContract.methods.cost().call(), 'ether'))
+    // this.purchasePriceTotal = this.priceInEth * this.purchaseAmount
+    //console.log(this.web3.getAccounts())
+    this.getContent()
 
   }
 
 
 
 
-  async purchaseToonForEth() {
+  async purchase() {
     this.isLoading = true;
     this.error = "";
     try{

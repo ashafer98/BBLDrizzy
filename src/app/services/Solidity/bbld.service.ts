@@ -23,7 +23,4 @@ const bbldContract = new provider.eth.Contract(
   "0xdcbadc585a2b0216c2fe01482aff29b37ffbc119" //0xdcbadc585a2b0216c2fe01482aff29b37ffbc119
 );
 
-console.log(provider)
-
-
 export default bbldContract;
