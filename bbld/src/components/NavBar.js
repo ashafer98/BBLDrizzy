@@ -1,20 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './NavBar.css';
+import logo from '../assets/bbld/Main_Logo.png'; // Import the image
 
 function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <img src="path/to/your/logo.png" alt="Logo" className="navbar-logo" />
-        <h1 className="navbar-title">My Navbar</h1>
+        <Link to="/about">
+          <img src={logo} alt="Logo" className="navbar-logo" />
+        </Link>
+        <Link to="/about" className="navbar-title-link">
+          <h1 className="navbar-title">BBLDrizzy.eth</h1>
+        </Link>
       </div>
       <div className="navbar-right">
-        <button className="navbar-button">Buy</button>
-        <button className="navbar-button">Login</button>
+        <Link to="/buy" className="navbar-button-link">
+          <button className="navbar-button">Buy</button>
+        </Link>
+        <Link to="/home" className="navbar-button-link">
+          <button className="navbar-button">Login</button>
+        </Link>
       </div>
     </nav>
   );
 }
 
 export default Navbar;
-
