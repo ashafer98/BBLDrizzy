@@ -17,7 +17,7 @@ import { HomeComponent } from './app/components/home/home.component';
 import { MintComponent } from './app/components/mint/mint.component';
 import { ManageComponent } from './app/components/manage/manage.component';
 import { NFTComponent } from './app/components/nft/nft.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbRangeModule } from 'mdb-angular-ui-kit/range';
 import { AboutComponent } from './app/components/about/about.component';
@@ -28,38 +28,30 @@ import { MarketplaceComponent } from './app/components/marketplace/marketplace.c
 import { FruittownComponent } from './app/components/fruittown/fruittown.component';
 import { BuyComponent } from './app/components/buy/buy.component';
 import { ElGatoDiabloComponent } from './app/components/elgatodiablo/elgatodiablo.component';
-@NgModule({
-  declarations: [
-    AppComponent,
-    TeamComponent,
-    RoadMapComponent,
-    NavbarComponent,
-    FooterComponent,
-    HomeComponent,
-    MintComponent,
-    ManageComponent,
-    NFTComponent,
-    ViewcatzComponent,
-    AccountComponent,
-    AboutComponent,
-    MarketplaceComponent,
-    FruittownComponent,
-    BuyComponent,
-    ElGatoDiabloComponent
-  ],
-  imports: [
-    StoreModule.forRoot({ address: addressReducer }),
-    FormsModule,
-    BrowserModule,
-    AppRoutingModule,
-    MdbCollapseModule,
-    MdbFormsModule,
-    HttpClientModule,
-    MdbCarouselModule,
-    MdbRangeModule
-
-  ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        TeamComponent,
+        RoadMapComponent,
+        NavbarComponent,
+        FooterComponent,
+        HomeComponent,
+        MintComponent,
+        ManageComponent,
+        NFTComponent,
+        ViewcatzComponent,
+        AccountComponent,
+        AboutComponent,
+        MarketplaceComponent,
+        FruittownComponent,
+        BuyComponent,
+        ElGatoDiabloComponent
+    ],
+    bootstrap: [AppComponent], imports: [StoreModule.forRoot({ address: addressReducer }),
+        FormsModule,
+        BrowserModule,
+        AppRoutingModule,
+        MdbCollapseModule,
+        MdbFormsModule,
+        MdbCarouselModule,
+        MdbRangeModule], providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
