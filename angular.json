@@ -104,5 +104,8 @@
       }
     }
   },
-  "defaultProject": "TheBuddhaInu"
+  "defaultProject": "TheBuddhaInu",
+  "cli": {
+    "analytics": false
+  }
 }
