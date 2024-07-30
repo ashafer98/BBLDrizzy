@@ -1,12 +1,12 @@
 .home {
-    padding: 2rem;
-    margin: 4rem auto 2rem; /* Added margin-top to give space from the navbar */
-    max-width: 800px;
-    background-color: #f9f9f9;
-    border-radius: 10px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center the content */
-  }
+  padding: 2rem;
+  margin: 5rem auto 2rem; /* Added margin-top to give space from the navbar */
+  max-width: 800px;
+  background-color: #f9f9f9;
+  border-radius: 10px; /* Rounded edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center the content */
+}
   
   .home-logo {
     width: 100%;

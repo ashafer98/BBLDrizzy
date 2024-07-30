@@ -7,10 +7,10 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/about">
+        <Link to="/">
           <img src={logo} alt="Logo" className="navbar-logo" />
         </Link>
-        <Link to="/about" className="navbar-title-link">
+        <Link to="/" className="navbar-title-link">
           <h1 className="navbar-title">BBLDrizzy.eth</h1>
         </Link>
       </div>
