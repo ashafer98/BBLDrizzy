@@ -10,8 +10,9 @@ import './App.css';
 function App() {
   return (
     <Router>
+      <Navbar />
+
       <div className="App">
-        <Navbar />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />  {/* Set Home as default route */}
@@ -28,3 +29,4 @@ function App() {
 }
 
 export default App;
+ 
