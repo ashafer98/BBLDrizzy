@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/NavBar';
-import Footer from './components/Footer';
-import About from './components/About';
+import Navbar from './components/navbar/NavBar';
+import Footer from './components/footer/Footer';
+import About from './components/about/About';
 import Buy from './components/buy/Buy';
 import Home from './components/home/Home';  // Import the Home component
 

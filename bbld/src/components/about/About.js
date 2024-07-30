@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.css';
-import logo from '../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 
 function About() {
   return (
