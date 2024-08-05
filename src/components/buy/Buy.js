@@ -34,33 +34,45 @@ function Buy() {
       setErrorMessage('MetaMask is not installed');
       return;
     }
-
+  
     if (!web3 || !contractInstance) {
       setErrorMessage('Web3 or contract instance is not initialized');
       return;
     }
-
+  
     try {
       // Request account access if needed
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-
+  
       // Get accounts from MetaMask
       const accounts = await web3.eth.getAccounts();
+      if (accounts.length === 0) {
+        setErrorMessage('No accounts found');
+        return;
+      }
       const account = accounts[0];
-
+  
       // Fetch the cost from the contract
       const cost = await contractInstance.methods.cost().call();
-      const totalCost = web3.utils.toWei((cost * amount).toString(), 'ether'); // Convert cost to Wei
-
+      const costInEther = web3.utils.fromWei(cost.toString(), 'ether'); // Convert to Ether
+      const totalCost = web3.utils.toWei((costInEther * amount).toString(), 'ether'); // Convert total cost to Wei
+  
+      // Log values for debugging
+      console.log(`Buying ${amount} tokens. Cost per token: ${costInEther} ETH. Total cost: ${totalCost} Wei.`);
+  
       // Send the transaction
-      await contractInstance.methods.buy(amount).send({ from: account, value: totalCost });
-
+      const tx = await contractInstance.methods.buy(amount).send({ from: account, value: totalCost });
+  
+      console.log('Transaction hash:', tx.transactionHash); // Log transaction hash for tracking
+  
       setSuccessMessage('Transaction successful!');
     } catch (error) {
+      console.error('Transaction error:', error); // Log error details
       setErrorMessage('Transaction failed: ' + error.message);
     }
   }
-
+  
+  
   return (
     <div className="buy">
       <img src={logo} alt="BBLD Logo" className="buy-logo" />
