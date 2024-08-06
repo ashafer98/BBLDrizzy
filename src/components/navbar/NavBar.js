@@ -92,8 +92,8 @@ function Navbar({ loggedIn, setLoggedIn }) {
         )}
         {loggedIn && (
           <>
-            <Link to="/balance" className="navbar-button-link">
-              <button className="navbar-button">Check Balance</button>
+            <Link to="/profile" className="navbar-button-link">
+              <button className="navbar-button">Profile</button>
             </Link>
             <button className="navbar-button" onClick={handleLoginLogout}>
               Logout

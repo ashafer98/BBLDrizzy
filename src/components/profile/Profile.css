@@ -1,0 +1,59 @@
+/* src/components/profile/Profile.css */
+
+.profile {
+    text-align: center;
+    padding: 20px;
+    background-color: #282c34; /* Matching the header background */
+    color: white; /* Text color to contrast with background */
+  }
+  
+  .profile-logo {
+    width: 200px; /* Adjust size as needed */
+    margin-bottom: 20px;
+  }
+  
+  .profile-form {
+    margin: 20px 0;
+  }
+  
+  .profile-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .profile-form input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    margin-right: 10px;
+  }
+  
+  .profile-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #61dafb; /* Same as Buy button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .profile-result {
+    margin-top: 20px;
+  }
+  
+  #balance {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+  }
+  
+  #error {
+    color: red;
+  }
+  
