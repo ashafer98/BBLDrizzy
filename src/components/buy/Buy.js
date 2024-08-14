@@ -67,14 +67,11 @@ function Buy() {
         setErrorMessage('No accounts found');
         return;
       }
-      const account = accounts[0];
-
-      // Fetch the cost from the contract
-      const cost = await contractInstance.methods.cost().call();
+      
       const totalCost = web3.utils.toWei((costInEther * amount).toString(), 'ether'); // Convert total cost to Wei
 
       // Send the transaction
-      const tx = await contractInstance.methods.buy(amount).send({ from: account, value: totalCost });
+      await contractInstance.methods.buy(amount).send({ from: accounts[0], value: totalCost });
 
       setSuccessMessage('Transaction successful!');
     } catch (error) {

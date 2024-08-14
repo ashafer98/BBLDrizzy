@@ -1,13 +1,12 @@
 // src/components/navbar/NavBar.js
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
-import '../../index.css';
+import './NavBar.css';
 import logo from '../../assets/bbld/Main_Logo.png'; // Import the image
 import { useUser } from '../../contexts/UserContext';
 
 function Navbar({ loggedIn, setLoggedIn }) {
-  const [account, setAccount] = useState(null);
   const navigate = useNavigate();
   const { setUserAddress } = useUser();
 
@@ -18,7 +17,6 @@ function Navbar({ loggedIn, setLoggedIn }) {
         try {
           const accounts = await web3.eth.getAccounts();
           if (accounts.length > 0) {
-            setAccount(accounts[0]);
             setLoggedIn(true);
             setUserAddress(accounts[0]); // Update context
           } else {
@@ -40,7 +38,6 @@ function Navbar({ loggedIn, setLoggedIn }) {
     if (loggedIn) {
       alert("Reminder: To truly logout you need to disconnet the website from your MetaMask or other web3 provider as well.");
       setLoggedIn(false);
-      setAccount(null);
       setUserAddress(''); // Clear address from context
       localStorage.removeItem('account');
       navigate('/');
@@ -55,7 +52,6 @@ function Navbar({ loggedIn, setLoggedIn }) {
         const web3 = new Web3(window.ethereum);
         const accounts = await web3.eth.getAccounts();
         if (accounts.length > 0) {
-          setAccount(accounts[0]);
           setLoggedIn(true);
           setUserAddress(accounts[0]); // Update context
           localStorage.setItem('account', accounts[0]);

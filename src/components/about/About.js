@@ -1,10 +1,9 @@
 import React from 'react';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../index.css';
 
 function About({ loggedIn }) {
-  const navigate = useNavigate();
 
 
   return (
