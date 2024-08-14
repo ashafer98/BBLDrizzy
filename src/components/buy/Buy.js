@@ -1,4 +1,3 @@
-// src/components/buy/Buy.js
 import React, { useState, useEffect } from 'react';
 import './Buy.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
@@ -6,6 +5,7 @@ import { initializeTatum } from '../../services/bbldService'; // Import the func
 
 function Buy() {
   const [amount, setAmount] = useState(1);
+  const [costInEther, setCostInEther] = useState('0');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [web3, setWeb3] = useState(null);
@@ -17,16 +17,32 @@ function Buy() {
         const { web3, contractInstance } = await initializeTatum();
         setWeb3(web3);
         setContractInstance(contractInstance);
+
+        // Calculate initial cost
+        const cost = await contractInstance.methods.cost().call();
+        const initialCostInEther = web3.utils.fromWei(cost.toString(), 'ether');
+        setCostInEther((initialCostInEther * amount).toString());
       } catch (error) {
         setErrorMessage('Initialization failed: ' + error.message);
       }
     }
 
     init();
-  }, []);
+  }, [amount]); // Re-run when `amount` changes
 
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+  const handleAmountChange = async (event) => {
+    const newAmount = event.target.value;
+    setAmount(newAmount);
+
+    if (web3 && contractInstance) {
+      try {
+        const cost = await contractInstance.methods.cost().call();
+        const costInEther = web3.utils.fromWei(cost.toString(), 'ether');
+        setCostInEther((costInEther * newAmount).toString());
+      } catch (error) {
+        setErrorMessage('Failed to fetch cost: ' + error.message);
+      }
+    }
   };
 
   async function handleBuy() {
@@ -34,16 +50,16 @@ function Buy() {
       setErrorMessage('MetaMask is not installed');
       return;
     }
-  
+
     if (!web3 || !contractInstance) {
       setErrorMessage('Web3 or contract instance is not initialized');
       return;
     }
-  
+
     try {
       // Request account access if needed
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-  
+
       // Get accounts from MetaMask
       const accounts = await web3.eth.getAccounts();
       if (accounts.length === 0) {
@@ -51,28 +67,20 @@ function Buy() {
         return;
       }
       const account = accounts[0];
-  
+
       // Fetch the cost from the contract
       const cost = await contractInstance.methods.cost().call();
-      const costInEther = web3.utils.fromWei(cost.toString(), 'ether'); // Convert to Ether
       const totalCost = web3.utils.toWei((costInEther * amount).toString(), 'ether'); // Convert total cost to Wei
-  
-      // Log values for debugging
-      console.log(`Buying ${amount} tokens. Cost per token: ${costInEther} ETH. Total cost: ${totalCost} Wei.`);
-  
+
       // Send the transaction
       const tx = await contractInstance.methods.buy(amount).send({ from: account, value: totalCost });
-  
-      console.log('Transaction hash:', tx.transactionHash); // Log transaction hash for tracking
-  
+
       setSuccessMessage('Transaction successful!');
     } catch (error) {
-      console.error('Transaction error:', error); // Log error details
       setErrorMessage('Transaction failed: ' + error.message);
     }
   }
-  
-  
+
   return (
     <div className="buy">
       <img src={logo} alt="BBLD Logo" className="buy-logo" />
@@ -87,15 +95,16 @@ function Buy() {
         <input
           type="range"
           min="1"
-          max="100"
+          max="1000000"
           value={amount}
           onChange={handleAmountChange}
           className="slider"
         />
         <span>{amount} BBLD</span>
       </div>
-      <button className="buy-button" onClick={handleBuy}>
-        Buy {amount} BBLD Tokens
+      <p>Cost: {costInEther} ETH</p>
+      <button className="button" onClick={handleBuy}>
+        Buy {amount} BBLD
       </button>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}

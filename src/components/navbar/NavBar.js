@@ -34,6 +34,9 @@ function Navbar({ loggedIn, setLoggedIn }) {
 
   const handleLoginLogout = async () => {
     if (loggedIn) {
+      // Display a logout reminder alert
+      alert("Reminder: Please log out of your MetaMask or other web3 provider as well.");
+
       // Handle logout
       setLoggedIn(false);
       setAccount(null);
@@ -54,6 +57,7 @@ function Navbar({ loggedIn, setLoggedIn }) {
           setAccount(accounts[0]);
           setLoggedIn(true);
           saveAccountToLocalStorage(accounts[0]);
+          navigate('/profile'); // Navigate to profile after successful login
         } else {
           alert('No accounts found');
         }
