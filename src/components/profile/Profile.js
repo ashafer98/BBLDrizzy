@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+// src/components/profile/Profile.js
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 import { initializeTatum } from '../../services/bbldService'; // Import the function
+import { useUser } from '../../contexts/UserContext';
 
 export default function Profile() {
+  const { userAddress } = useUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [balance, setBalance] = useState("");
-  const address = "0xDcBADc585a2b0216C2Fe01482AFf29B37ffbC119"; // Default address
 
   const getBalance = async () => {
     setLoading(true);
@@ -16,7 +18,7 @@ export default function Profile() {
 
     try {
       const { contractInstance } = await initializeTatum();
-      const bal = await contractInstance.methods.balanceOf(address).call();
+      const bal = await contractInstance.methods.balanceOf(userAddress).call();
       setBalance(`${bal} BBLD`);
     } catch (e) {
       setError("Failed to fetch balance: " + e.message);
@@ -28,9 +30,10 @@ export default function Profile() {
   return (
     <div className="profile">
       <img src={logo} alt="BBLD Logo" className="profile-logo" />
-      <h2>Welcome {address}</h2>
+      <h2>Welcome {userAddress}</h2>
       <p>
-        Welcome to your BBLD token profile!<br></br> Here you can check your token balance, We will be adding more features soon.
+        Welcome to your BBLD token profile!<br />
+        Here you can check your token balance. We will be adding more features soon.
       </p>
       <button 
         className="button" 

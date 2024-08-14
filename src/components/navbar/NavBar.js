@@ -1,12 +1,15 @@
+// src/components/navbar/NavBar.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
 import './NavBar.css';
 import logo from '../../assets/bbld/Main_Logo.png'; // Import the image
+import { useUser } from '../../contexts/UserContext';
 
 function Navbar({ loggedIn, setLoggedIn }) {
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
+  const { setUserAddress } = useUser();
 
   useEffect(() => {
     const checkMetaMaskConnection = async () => {
@@ -17,6 +20,7 @@ function Navbar({ loggedIn, setLoggedIn }) {
           if (accounts.length > 0) {
             setAccount(accounts[0]);
             setLoggedIn(true);
+            setUserAddress(accounts[0]); // Update context
           } else {
             setLoggedIn(false);
           }
@@ -30,20 +34,17 @@ function Navbar({ loggedIn, setLoggedIn }) {
     };
 
     checkMetaMaskConnection();
-  }, [setLoggedIn]);
+  }, [setLoggedIn, setUserAddress]);
 
   const handleLoginLogout = async () => {
     if (loggedIn) {
-      // Display a logout reminder alert
       alert("Reminder: Please log out of your MetaMask or other web3 provider as well.");
-
-      // Handle logout
       setLoggedIn(false);
       setAccount(null);
-      clearAccountFromLocalStorage();
+      setUserAddress(''); // Clear address from context
+      localStorage.removeItem('account');
       navigate('/');
     } else {
-      // Handle login
       if (!window.ethereum) {
         alert('MetaMask is not installed');
         return;
@@ -56,7 +57,8 @@ function Navbar({ loggedIn, setLoggedIn }) {
         if (accounts.length > 0) {
           setAccount(accounts[0]);
           setLoggedIn(true);
-          saveAccountToLocalStorage(accounts[0]);
+          setUserAddress(accounts[0]); // Update context
+          localStorage.setItem('account', accounts[0]);
           navigate('/profile'); // Navigate to profile after successful login
         } else {
           alert('No accounts found');
@@ -65,14 +67,6 @@ function Navbar({ loggedIn, setLoggedIn }) {
         alert('Login failed: ' + error.message);
       }
     }
-  };
-
-  const saveAccountToLocalStorage = (account) => {
-    localStorage.setItem('account', account);
-  };
-
-  const clearAccountFromLocalStorage = () => {
-    localStorage.removeItem('account');
   };
 
   return (
