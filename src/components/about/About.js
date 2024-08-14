@@ -1,18 +1,11 @@
 import React from 'react';
-import './About.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 import { Link, useNavigate } from 'react-router-dom';
+import '../../index.css';
 
 function About({ loggedIn }) {
   const navigate = useNavigate();
 
-  // const handleLogin = () => {
-  //   if (loggedIn) {
-  //     navigate('/profile');
-  //   } else {
-  //     navigate('/login');
-  //   }
-  // };
 
   return (
     <div className="about">

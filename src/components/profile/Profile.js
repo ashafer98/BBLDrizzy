@@ -1,6 +1,6 @@
 // src/components/profile/Profile.js
 import React, { useState, useEffect } from 'react';
-import './Profile.css';
+import '../../index.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 import { initializeTatum } from '../../services/bbldService'; // Import the function
 import { useUser } from '../../contexts/UserContext';

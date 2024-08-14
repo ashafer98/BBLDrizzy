@@ -6,11 +6,10 @@ import About from './components/about/About';
 import Buy from './components/buy/Buy';
 import OG_NFT from './components/og_nft/OG_NFT';
 import Staking from './components/staking/Staking';
-import Home from './components/home/Home'; // Import the Home component
 import Roadmap from './components/roadmap/Roadmap';
 import MetaMaskLogin from './components/login/MetaMaskLogin'; // Import the MetaMaskLogin component
 import Profile from './components/profile/Profile';
-import Team from './components/team/Staking';
+import Team from './components/team/Team';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -34,7 +33,6 @@ function App() {
             <Route path="/og_nft" element={<OG_NFT />} />
             <Route path="/staking" element={<Staking />} />
             <Route path="/roadmap" element={<Roadmap />} />
-            <Route path="/home" element={loggedIn ? <Home /> : <About />} />
             <Route path="/login" element={<MetaMaskLogin setLoggedIn={setLoggedIn} />} />
             <Route path="/profile" element={loggedIn ? <Profile /> : <About /> } /> {/* Update path */}
             {/* Add other routes here */}

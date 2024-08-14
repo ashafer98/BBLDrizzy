@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
-import './NavBar.css';
+import '../../index.css';
 import logo from '../../assets/bbld/Main_Logo.png'; // Import the image
 import { useUser } from '../../contexts/UserContext';
 
