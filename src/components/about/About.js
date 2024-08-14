@@ -8,8 +8,8 @@ function About({ loggedIn }) {
 
 
   return (
-    <div className="about">
-      <img src={logo} alt="BBLD Logo" className="about-logo" />
+    <div className="main-container">
+      <img src={logo} alt="BBLD Logo" className="logo" />
 
       <h2>Welcome to the BBLD Project!</h2>
       <p>

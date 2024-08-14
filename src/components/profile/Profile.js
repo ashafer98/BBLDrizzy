@@ -28,8 +28,8 @@ export default function Profile() {
   };
 
   return (
-    <div className="profile">
-      <img src={logo} alt="BBLD Logo" className="profile-logo" />
+    <div className="main-container">
+      <img src={logo} alt="BBLD Logo" className="logo" />
       <h2>Welcome {userAddress}</h2>
       <p>
         Welcome to your BBLD token profile!<br />

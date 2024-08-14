@@ -83,8 +83,8 @@ function Buy() {
   }
 
   return (
-    <div className="buy">
-      <img src={logo} alt="BBLD Logo" className="buy-logo" />
+    <div className="main-container">
+      <img src={logo} alt="BBLD Logo" className="logo" />
       <h2>Buy BBLD Tokens</h2>
       <p>
         Welcome to the BBLD Project! The meme coin that’s got more lift than Drizzy's Brazilian butt lift! By owning BBLD, you're joining the coolest community in crypto.

@@ -4,8 +4,8 @@ import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if ne
 import { Link } from 'react-router-dom';
 function Team() {
   return (
-    <div className="home">
-      <img src={logo} alt="BBLD Logo" className="home-logo" />
+    <div className="main-container">
+      <img src={logo} alt="BBLD Logo" className="logo" />
       <h2>Team</h2>
 
       <p>
