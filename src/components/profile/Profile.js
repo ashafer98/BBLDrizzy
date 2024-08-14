@@ -4,7 +4,7 @@ import './Profile.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 import { initializeTatum } from '../../services/bbldService'; // Import the function
 import { useUser } from '../../contexts/UserContext';
-
+import { Link } from 'react-router-dom';
 export default function Profile() {
   const { userAddress } = useUser();
   const [loading, setLoading] = useState(false);
@@ -42,6 +42,9 @@ export default function Profile() {
       >
         {loading ? 'Loading...' : 'Get Balance'}
       </button>
+      <Link to="/">
+          <button className="button">Back</button>
+      </Link>
       <div className="profile-result">
         {balance && <h3 id="balance">{balance}</h3>}
         {error && <div id="error" className="error-message">{error}</div>}

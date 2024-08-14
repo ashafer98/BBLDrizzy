@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Buy.css';
 import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
 import { initializeTatum } from '../../services/bbldService'; // Import the function
+import { Link } from 'react-router-dom';
 
 function Buy() {
   const [amount, setAmount] = useState(1);
@@ -106,6 +107,9 @@ function Buy() {
       <button className="button" onClick={handleBuy}>
         Buy {amount} BBLD
       </button>
+      <Link to="/">
+          <button className="button">Back</button>
+      </Link>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
     </div>

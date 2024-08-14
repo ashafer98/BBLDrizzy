@@ -38,7 +38,7 @@ function Navbar({ loggedIn, setLoggedIn }) {
 
   const handleLoginLogout = async () => {
     if (loggedIn) {
-      alert("Reminder: Please log out of your MetaMask or other web3 provider as well.");
+      alert("Reminder: To truly logout you need to disconnet the website from your MetaMask or other web3 provider as well.");
       setLoggedIn(false);
       setAccount(null);
       setUserAddress(''); // Clear address from context
@@ -82,6 +82,18 @@ function Navbar({ loggedIn, setLoggedIn }) {
       <div className="navbar-right">
         <Link to="/buy" className="navbar-button-link">
           <button className="navbar-button">Buy</button>
+        </Link>
+        <Link to="/team" className="navbar-button-link">
+          <button className="navbar-button">Team</button>
+        </Link>
+        <Link to="/roadmap" className="navbar-button-link">
+          <button className="navbar-button">Roadmap</button>
+        </Link>
+        <Link to="/og_nft" className="navbar-button-link">
+          <button className="navbar-button">NFT</button>
+        </Link>
+        <Link to="/staking" className="navbar-button-link">
+          <button className="navbar-button">Staking</button>
         </Link>
         {!loggedIn && (
           <button className="navbar-button" onClick={handleLoginLogout}>
