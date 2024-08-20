@@ -3,7 +3,7 @@ git add commit push
 
 build by running
 
-npm run start
+npm run build
 
 MAke sure your in this directory
 ~/BBLdrizzy/build
