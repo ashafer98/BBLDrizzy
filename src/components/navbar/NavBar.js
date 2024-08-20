@@ -1,5 +1,4 @@
-// src/components/navbar/NavBar.js
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
 import './NavBar.css';
@@ -7,6 +6,7 @@ import logo from '../../assets/bbld/Main_Logo.png'; // Import the image
 import { useUser } from '../../contexts/UserContext';
 
 function Navbar({ loggedIn, setLoggedIn }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { setUserAddress } = useUser();
 
@@ -36,7 +36,7 @@ function Navbar({ loggedIn, setLoggedIn }) {
 
   const handleLoginLogout = async () => {
     if (loggedIn) {
-      alert("Reminder: To truly logout you need to disconnet the website from your MetaMask or other web3 provider as well.");
+      alert("Reminder: To truly logout you need to disconnect the website from your MetaMask or other web3 provider as well.");
       setLoggedIn(false);
       setUserAddress(''); // Clear address from context
       localStorage.removeItem('account');
@@ -65,6 +65,21 @@ function Navbar({ loggedIn, setLoggedIn }) {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false); // Close the menu when resizing to a larger screen
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -74,6 +89,43 @@ function Navbar({ loggedIn, setLoggedIn }) {
         <Link to="/" className="navbar-title-link">
           <h1 className="navbar-title">BBLDrizzy.eth</h1>
         </Link>
+      </div>
+      <div className="hamburger" onClick={toggleMenu}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div className={`navbar-right-mobile ${isMenuOpen ? 'active' : ''}`}>
+        <Link to="/buy" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Buy</button>
+        </Link>
+        <Link to="/team" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Team</button>
+        </Link>
+        <Link to="/roadmap" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Roadmap</button>
+        </Link>
+        <Link to="/og_nft" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">NFT</button>
+        </Link>
+        <Link to="/staking" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Staking</button>
+        </Link>
+        {!loggedIn && (
+          <button className="navbar-button" onClick={() => { handleLoginLogout(); toggleMenu(); }}>
+            Login
+          </button>
+        )}
+        {loggedIn && (
+          <>
+            <Link to="/profile" className="navbar-button-link" onClick={toggleMenu}>
+              <button className="navbar-button">Profile</button>
+            </Link>
+            <button className="navbar-button" onClick={() => { handleLoginLogout(); toggleMenu(); }}>
+              Logout
+            </button>
+          </>
+        )}
       </div>
       <div className="navbar-right">
         <Link to="/buy" className="navbar-button-link">

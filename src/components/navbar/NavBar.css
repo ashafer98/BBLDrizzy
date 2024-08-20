@@ -1,44 +1,136 @@
+.navbar {
+  display: flex;
+  justify-content: center; /* Center the entire navbar */
+  align-items: center;
+  padding: 0.5rem; /* Adjusted padding to ensure no overflow */
+  background-color: #333;
+  color: white;
+  position: relative;
+}
+
 .navbar-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-logo {
-    width: 50px; /* Adjust the size as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 1rem;
-  }
-  
-  .navbar-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .navbar-title-link {
-    text-decoration: none; /* Remove underline from link */
-    color: white; /* Ensure text color is white */
-  }
-  
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* Pushes the left side to the far left */
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 0.5rem;
+}
+
+.navbar-title {
+  font-size: 1.2rem;
+}
+
+.navbar-title-link {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto; /* Pushes the menu items to the center */
+}
+
+.navbar-button-link {
+  text-decoration: none;
+}
+
+.navbar-button {
+  padding: 0.4rem 0.8rem;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.navbar-button:hover {
+  background-color: #F98282; /* Highlight color when hovered */
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem; /* Adjust this value if needed */
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+/* Mobile Dropdown Menu */
+.navbar-right-mobile {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  padding: 1rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.navbar-right-mobile.active {
+  display: flex;
+}
+
+.navbar-right-mobile a {
+  width: 100%;
+  text-align: center;
+  margin: 0.5rem 0; /* Add margin to create space between dropdown options */
+}
+
+.navbar-right-mobile a:hover {
+  background-color: #F98282; /* Highlight color when hovered */
+  padding: 0.5rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .navbar-right {
-    display: flex;
-    gap: 1rem;
-    padding-right: 1rem;
+    display: none; /* Hide the standard menu on mobile */
   }
-  
-  .navbar-button-link {
-    text-decoration: none;
+
+  .hamburger {
+    display: flex; /* Show hamburger menu on mobile */
+    right: 1rem; /* Ensure the hamburger icon isn't cut off */
   }
-  
-  .navbar-button {
-    padding: 0.5rem 1rem;
-    background-color: #555;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+}
+
+/* Ensure dropdown menu is hidden when switching to a larger view */
+@media (min-width: 769px) {
+  .navbar-right-mobile {
+    display: none !important; /* Force hide the mobile dropdown menu */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
     font-size: 1rem;
   }
-  
-  .navbar-button:hover {
-    background-color: #777;
+
+  .navbar-logo {
+    width: 30px;
   }
+
+  .navbar-button {
+    font-size: 0.8rem;
+  }
+}
