@@ -19,7 +19,7 @@ code {
 .main-container {
   padding: 2rem;
   margin: 5rem auto 2rem;
-  max-width: 900px; /* Increased max-width for a wider layout */
+  max-width: 900px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -71,17 +71,18 @@ code {
 /* Team Styles */
 .team-members {
   display: flex;
-  justify-content: space-around; /* Distribute space around the items */
+  justify-content: space-around;
+  flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
   margin-top: 2rem;
 }
 
 .team-member {
-  flex: 1;
-  max-width: 40%; /* Slightly narrower columns */
-  background-color: #f9f9f9; /* Light background for contrast */
+  flex: 1 1 100%; /* Flex-basis 100% to make items stack on smaller screens */
+  max-width: 45%;
+  background-color: #f9f9f9;
   border-radius: 8px;
   padding: 20px;
-  margin: 0 1rem;
+  margin: 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -101,7 +102,7 @@ code {
 h3 {
   margin-top: 10px;
   font-size: 1.5em;
-  color: #007bff; /* Updated color */
+  color: #007bff;
 }
 
 p {
@@ -132,7 +133,7 @@ p {
 .roadmap-phase {
   margin-bottom: 30px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent to blend with background */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -147,8 +148,8 @@ p {
 }
 
 .roadmap-phase ul {
-  list-style-type: none; /* Removes bullet points */
-  padding-left: 0; /* Removes left padding */
+  list-style-type: none;
+  padding-left: 0;
   text-align: left;
 }
 
@@ -156,13 +157,75 @@ p {
   font-size: 1.1em;
   margin-bottom: 10px;
   color: #555;
-  padding-left: 15px; /* Adds padding to align with text block */
+  padding-left: 15px;
   position: relative;
 }
 
 .roadmap-phase ul li::before {
-  content: "•"; /* Adds a custom bullet (optional) */
-  color: #007bff; /* Custom bullet color */
+  content: "•";
+  color: #007bff;
   position: absolute;
   left: 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .main-container {
+    margin: 2rem 1rem; /* Reduce margins on smaller screens */
+    padding: 1rem; /* Reduce padding */
+  }
+
+  .team-member {
+    max-width: 100%; /* Make team members full width on mobile */
+    margin: 1rem 0; /* Adjust margins for better spacing */
+  }
+
+  h3 {
+    font-size: 1.3em; /* Reduce font size for smaller screens */
+  }
+
+  .button {
+    width: 100%; /* Make buttons full width on mobile */
+    margin: 0.5rem 0; /* Adjust margin for better spacing */
+  }
+
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .roadmap-phase {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .roadmap-phase h3 {
+    font-size: 1.3em; /* Reduce heading size for better readability on small screens */
+  }
+
+  .roadmap-phase ul li {
+    font-size: 1em; /* Reduce list item font size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .team-image {
+    width: 100px; /* Reduce image size for very small screens */
+    height: 100px;
+  }
+
+  .team-member {
+    padding: 15px; /* Adjust padding */
+  }
+
+  .button {
+    font-size: 0.9rem; /* Slightly reduce font size on buttons */
+  }
+
+  h3 {
+    font-size: 1.2em; /* Further reduce heading size */
+  }
+
+  p {
+    font-size: 0.9em; /* Reduce paragraph font size */
+  }
 }
