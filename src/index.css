@@ -18,18 +18,18 @@ code {
 
 .main-container {
   padding: 2rem;
-  margin: 5rem auto 2rem; /* Added margin-top to give space from the navbar */
-  max-width: 800px;
+  margin: 5rem auto 2rem;
+  max-width: 900px; /* Increased max-width for a wider layout */
   background-color: #f9f9f9;
-  border-radius: 10px; /* Rounded edges */
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Center the content */
+  text-align: center;
 }
 
 .logo {
   width: 100%;
-  max-width: 300px; /* Adjust the max-width as needed */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 300px;
+  height: auto;
   margin-bottom: 1rem;
 }
 
@@ -37,8 +37,8 @@ code {
   display: inline-block;
   margin: 1rem;
   padding: 0.75rem 0;
-  width: 200px; /* Set a fixed width */
-  background-color: #007bff;
+  width: 200px;
+  background-color: #F98282;
   color: white;
   border: none;
   border-radius: 30px;
@@ -48,21 +48,18 @@ code {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, transform 0.3s ease;
   text-transform: uppercase;
-  text-align: center; /* Center the text */
+  text-align: center;
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: #333;
   transform: translateY(-2px);
 }
 
-
-  
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding: 1rem 2rem; */
   background-color: #333;
   color: white;
   position: fixed;
@@ -71,3 +68,101 @@ code {
   z-index: 1000;
 }
 
+/* Team Styles */
+.team-members {
+  display: flex;
+  justify-content: space-around; /* Distribute space around the items */
+  margin-top: 2rem;
+}
+
+.team-member {
+  flex: 1;
+  max-width: 40%; /* Slightly narrower columns */
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.team-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 10px;
+  font-size: 1.5em;
+  color: #007bff; /* Updated color */
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.role {
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.description {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #666;
+  text-align: left;
+}
+
+/* Roadmap Styles */
+.roadmap-container {
+  margin-top: 30px;
+}
+
+.roadmap-phase {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent to blend with background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.roadmap-phase h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.roadmap-phase ul {
+  list-style-type: none; /* Removes bullet points */
+  padding-left: 0; /* Removes left padding */
+  text-align: left;
+}
+
+.roadmap-phase ul li {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #555;
+  padding-left: 15px; /* Adds padding to align with text block */
+  position: relative;
+}
+
+.roadmap-phase ul li::before {
+  content: "•"; /* Adds a custom bullet (optional) */
+  color: #007bff; /* Custom bullet color */
+  position: absolute;
+  left: 0;
+}
