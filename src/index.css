@@ -69,14 +69,14 @@ code {
 }
 
 /* Team Styles */
-.team-members {
+.pretty-cards {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
   margin-top: 2rem;
 }
 
-.team-member {
+.pretty-card {
   flex: 1 1 100%; /* Flex-basis 100% to make items stack on smaller screens */
   max-width: 45%;
   background-color: #f9f9f9;
@@ -87,7 +87,7 @@ code {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.team-member:hover {
+.pretty-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -175,7 +175,7 @@ p {
     padding: 1rem; /* Reduce padding */
   }
 
-  .team-member {
+  .pretty-card {
     max-width: 100%; /* Make team members full width on mobile */
     margin: 1rem 0; /* Adjust margins for better spacing */
   }
@@ -213,7 +213,7 @@ p {
     height: 100px;
   }
 
-  .team-member {
+  .pretty-card {
     padding: 15px; /* Adjust padding */
   }
 
