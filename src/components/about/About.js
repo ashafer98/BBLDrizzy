@@ -1,7 +1,9 @@
 import React from 'react';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
 import { Link } from 'react-router-dom';
 import '../../index.css';
+import coin from '../../assets/bbld/coin.gif'
+import bbld_char from '../../assets/bbld/bbld_char.jpg'
 
 function About({ loggedIn }) {
 
@@ -21,13 +23,31 @@ function About({ loggedIn }) {
         <a href="https://etherscan.io/token/0xdcbadc585a2b0216c2fe01482aff29b37ffbc119" target="_blank" rel="noopener noreferrer">
           <button className="button">View Contract</button>
         </a>
-        <Link to="/buy">
-          <button className="button">Buy</button>
-        </Link>
-        {/* <button className="button" onClick={handleLogin}>
-          {loggedIn ? 'Profile' : 'Login'}
-        </button> */}
+
       </div>
+
+      <div className='pretty-cards'>
+
+        <div className='pretty-card'>
+          <p>BBLD Coin</p>
+          <img src={coin} alt="BBLD" style={{ maxWidth: '25vh', height: 'auto', objectFit: 'contain' }} />
+
+          <Link to="/buy">
+            <button className="button">Buy BBLD Coin</button>
+          </Link>
+        </div>
+
+        <div className='pretty-card'>
+          <p>BBLD OG NFT</p>
+          <img src={bbld_char} alt="BBLD char" style={{ maxWidth: '25vh', height: 'auto', objectFit: 'contain' }} />
+
+          <Link to="/og_nft">
+            <button className="button">Buy OG NFT</button>
+          </Link>
+        </div>
+
+      </div>
+
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../index.css';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
 import { Link } from 'react-router-dom';
 
 function Roadmap() {

@@ -15,9 +15,7 @@
 }
 
 .navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 0.5rem;
+  width: 7vh;
 }
 
 .navbar-title {
@@ -29,11 +27,17 @@
   color: white;
 }
 
+.navbar-title:hover {
+  background-color: #F98282; /* Highlight color when hovered */
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-left: auto; /* Pushes the menu items to the center */
+  margin-right: 5vh; /* Pushes the left side to the far left */
+
 }
 
 .navbar-button-link {

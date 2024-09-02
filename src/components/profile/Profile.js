@@ -1,7 +1,8 @@
 // src/components/profile/Profile.js
 import React, { useState } from 'react';
 import '../../index.css';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
+import coin from '../../assets/bbld/coin.gif'; // Adjust the path if necessary
 import { initializeTatum } from '../../services/bbldService'; // Import the function
 import { useUser } from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
@@ -35,20 +36,26 @@ export default function Profile() {
         Welcome to your BBLD token profile!<br />
         Here you can check your token balance. We will be adding more features soon.
       </p>
-      <button 
-        className="button" 
-        disabled={loading} 
-        onClick={getBalance}
-      >
-        {loading ? 'Loading...' : 'Get Balance'}
-      </button>
-      <Link to="/">
-          <button className="button">Back</button>
-      </Link>
-      <div className="profile-result">
-        {balance && <h3 id="balance">{balance}</h3>}
-        {error && <div id="error" className="error-message">{error}</div>}
+      <div className='pretty-cards'>
+        <div className='pretty-card'>
+        <img src={coin} alt="BBLD" style={{ maxWidth: '50vh', height: 'auto', objectFit: 'contain' }} />
+
+          <div className="profile-result">
+            {balance && <h1 id="balance">{balance}</h1>}
+            {error && <div id="error" className="error-message">{error}</div>}
+            <button
+              className="button"
+              disabled={loading}
+              onClick={getBalance}
+            >
+              {loading ? 'Loading...' : 'Get Balance'}
+            </button>
+          </div>
+        </div>
       </div>
+      <Link to="/">
+        <button className="button">Back</button>
+      </Link>
     </div>
   );
 }

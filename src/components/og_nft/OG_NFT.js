@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../index.css';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
 import bbldchar from '../../assets/bbld/bbld_char.jpg'; // Adjust the path if necessary
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ function OG_NFT() {
   return (
     <div className="main-container" style={{ textAlign: 'center' }}>
       <img src={logo} alt="BBLD Logo" className="logo" />
-      <h2>OG NFT</h2>
+      <h2>OG NFT (EXAMPLE PAGE)</h2>
 
       <div style={{ marginBottom: '40px' }}>
         <p>This will be where the future OG NFT mint will take place once we have 100 holders.</p>

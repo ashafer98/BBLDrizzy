@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../../index.css';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
+import coin from '../../assets/bbld/coin.gif'
 import { initializeTatum } from '../../services/bbldService'; // Import the function
 import { Link } from 'react-router-dom';
 
 function Buy() {
   const [amount, setAmount] = useState(1);
-  const [costInEther, setCostInEther] = useState('0');
+  const [totalCostInEth, setTotalCost] = useState('0');
+  const [initialCostInEth, setInitialCostInEth] = useState('0');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [web3, setWeb3] = useState(null);
@@ -21,8 +23,9 @@ function Buy() {
 
         // Calculate initial cost
         const cost = await contractInstance.methods.cost().call();
-        const initialCostInEther = web3.utils.fromWei(cost.toString(), 'ether');
-        setCostInEther((initialCostInEther * amount).toString());
+        const initialCostInEth = web3.utils.fromWei(cost.toString(), 'ether');
+        setTotalCost((initialCostInEth * amount).toString());
+        setInitialCostInEth(initialCostInEth);
       } catch (error) {
         setErrorMessage('Initialization failed: ' + error.message);
       }
@@ -32,14 +35,22 @@ function Buy() {
   }, [amount]); // Re-run when `amount` changes
 
   const handleAmountChange = async (event) => {
-    const newAmount = event.target.value;
+    let newAmount = event.target.value;
+    // Ensure newAmount is a valid number, otherwise reset to 1
+    if (!/^\d+$/.test(newAmount)) {
+      setAmount(1);
+      return;
+    }
+
+    // Parse newAmount to an integer and ensure it's at least 1
+    newAmount = Math.max(1, parseInt(newAmount));
     setAmount(newAmount);
 
     if (web3 && contractInstance) {
       try {
         const cost = await contractInstance.methods.cost().call();
-        const costInEther = web3.utils.fromWei(cost.toString(), 'ether');
-        setCostInEther((costInEther * newAmount).toString());
+        const totalCostInEth = web3.utils.fromWei(cost.toString(), 'ether');
+        setTotalCost((totalCostInEth * newAmount).toString());
       } catch (error) {
         setErrorMessage('Failed to fetch cost: ' + error.message);
       }
@@ -67,8 +78,8 @@ function Buy() {
         setErrorMessage('No accounts found');
         return;
       }
-      
-      const totalCost = web3.utils.toWei((costInEther * amount).toString(), 'ether'); // Convert total cost to Wei
+
+      const totalCost = web3.utils.toWei((totalCostInEth).toString(), 'ether'); // Convert total cost to Wei
 
       // Send the transaction
       await contractInstance.methods.buy(amount).send({ from: accounts[0], value: totalCost });
@@ -89,25 +100,60 @@ function Buy() {
       <p>
         To buy BBLD tokens, select the amount below and click the button. Make sure you have your wallet connected and enough ETH for the transaction.
       </p>
-      <div className="slider-container">
-        <input
-          type="range"
-          min="1"
-          max="1000000"
-          value={amount}
-          onChange={handleAmountChange}
-          className="slider"
-        />
-        <span>{amount} BBLD</span>
+      <a href="https://etherscan.io/token/0xdcbadc585a2b0216c2fe01482aff29b37ffbc119" target="_blank" rel="noopener noreferrer">
+          <button className="button">View Contract</button>
+        </a>
+
+      <div className='pretty-cards'>
+        <div className='pretty-card'>
+          <p>Price : {initialCostInEth} ETH</p>
+          <img src={coin} alt="BBLD" style={{ maxWidth: '50vh', height: 'auto', objectFit: 'contain' }} />
+
+          <div className="number-input-container">
+            <button
+              className="arrow-button"
+              onClick={() => setAmount((prevAmount) => Math.max(1, prevAmount - 1))}
+            >
+              &lt;
+            </button>
+            <input
+              type="number"
+              min="1"
+              max="1000000"
+              value={amount}
+              onChange={handleAmountChange}
+              className="input-number"
+            />
+            <button
+              className="arrow-button"
+              onClick={() => setAmount((prevAmount) => Math.max(1, prevAmount + 1))}
+            >
+              &gt;
+            </button>
+          </div>
+
+          <div className="slider-container">
+            <input
+              type="range"
+              min="1"
+              max="1000000"
+              value={amount}
+              onChange={handleAmountChange}
+              className="input-slider"
+            />
+          </div>
+          <span>{amount} BBLD</span>
+          <p style={{ textAlign: 'center' }}>Cost: {totalCostInEth} ETH</p>
+          <button className="button" onClick={handleBuy}>
+            Buy {amount} BBLD
+          </button>
+        </div>
       </div>
-      <p>Cost: {costInEther} ETH</p>
-      <button className="button" onClick={handleBuy}>
-        Buy {amount} BBLD
-      </button>
       <Link to="/">
-          <button className="button">Back</button>
+        <button className="button">Back</button>
       </Link>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      {errorMessage && <p className="error-message">{errorMessage} <br></br>Please check your MetaMask or other web3 provider.</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
     </div>
   );

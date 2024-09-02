@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../index.css';
-import logo from '../../assets/bbld/top_page_logo.png'; // Adjust the path if necessary
+import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
 import kikil0 from '../../assets/kikil0.png'; // Image for Team Member 1
 import sudoakula from '../../assets/sudoakula.png'; // Image for Team Member 2
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ function Team() {
           <h3>sudoakula</h3>
           <p className="role"><b>Role:</b> Developer</p>
           <p className="description">
-            Web3 and Blockchain Specialist, focusing on Decentralized Finance (DeFi) solutions. Successfully deployed a variety of smart contracts on Ethereum, including NFTs, ERC20, ERC721(A), and DAOs. Certified and Highly Educated, holding a master's degree in cybersecurity, CISSP certification, and TS/SCI clearance. Currently engaged in PhD research on asynchronous consensus protocols for blockchain systems.
+            Web3 and Blockchain Specialist, focusing on Decentralized Finance (DeFi) solutions. Successfully deployed a variety of smart contracts on Ethereum, including NFTs, ERC20, ERC721(A), and DAOs. Certified and Highly Educated, holding a master's degree in cybersecurity and CISSP certification. Currently engaged in PhD research on asynchronous consensus protocols for blockchain systems.
           </p>
         </div>
       </div>

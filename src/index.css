@@ -27,10 +27,8 @@ code {
 }
 
 .logo {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  margin-bottom: 1rem;
+  max-width: 25vh;
+
 }
 
 .button {
@@ -92,6 +90,15 @@ code {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.bbld-image {
+  max-width: 25vh;
+  height: auto;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .team-image {
   width: 120px;
   height: 120px;
@@ -108,7 +115,7 @@ h3 {
 p {
   font-size: 1em;
   line-height: 1.5;
-  text-align: left;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -166,6 +173,16 @@ p {
   color: #007bff;
   position: absolute;
   left: 0;
+}
+.roadmap-phase:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+
+}
+
+.input-slider {
+  width: 85%;
 }
 
 /* Responsive Styles */
@@ -228,4 +245,47 @@ p {
   p {
     font-size: 0.9em; /* Reduce paragraph font size */
   }
+}
+
+.number-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-number {
+  width: 100px; /* Adjust the width as needed */
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.arrow-button {
+  background-color: #F98282;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  border-radius: 4px;
+}
+
+.arrow-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+  }
+
+  .error-message,
+.success-message {
+  text-align: center;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+}
+
+.success-message {
+  color: green;
 }
