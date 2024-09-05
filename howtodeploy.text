@@ -8,3 +8,4 @@ npm run build
 MAke sure your in this directory
 ~/BBLdrizzy/build
 
+aws s3 sync . s3://bbldrizzy --delete --exclude "metadata/*"
