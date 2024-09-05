@@ -17,11 +17,43 @@ function OG_NFT() {
   const [userAllowance, setUserAllowance] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState(null); // Track the current account
   const OG_NFT_CONTRACT_ADDRESS = '0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264';
 
   useEffect(() => {
+    // Check connection and fetch data on load
     checkConnectionAndFetchData();
+
+    // Listen for account changes
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountChanged);
+    }
+
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountChanged);
+      }
+    };
   }, []);
+
+  const handleAccountChanged = (accounts) => {
+    if (accounts.length > 0) {
+      setCurrentAccount(accounts[0]);
+      resetState(); // Reset state when switching accounts
+      checkConnectionAndFetchData(); // Fetch new data for the new account
+    } else {
+      resetState(); // If no accounts, reset the state and show connect button
+      setIsConnected(false);
+    }
+  };
+
+  const resetState = () => {
+    setUserOGCount(null);
+    setUserAllowance(null);
+    setErrorMessage('');
+    setBbldCost('Loading...');
+    setEthCost('Loading...');
+  };
 
   const checkConnectionAndFetchData = async () => {
     try {
@@ -29,7 +61,8 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length > 0) {
-        setIsConnected(true);
+        setCurrentAccount(accounts[0]);
+        setIsConnected(true); // Mark as connected
         setErrorMessage(''); // Clear error message on successful connection
         const userAddress = accounts[0];
         const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
@@ -41,12 +74,11 @@ function OG_NFT() {
 
         const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
         setUserAllowance(web3.utils.fromWei(allowance, 'wei'));
-        handleCheckOGCount(); // Refresh inventory on successful connection
+        handleCheckOGCount(); // Fetch user data after connection
       } else {
+        // No connected accounts, reset and show connect button
+        resetState();
         setIsConnected(false);
-        setBbldCost('Loading...');
-        setEthCost('Loading...');
-        setUserAllowance(null);
       }
     } catch (error) {
       console.error("Error checking connection and fetching data:", error);
@@ -56,11 +88,22 @@ function OG_NFT() {
 
   const handleConnect = async () => {
     try {
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      checkConnectionAndFetchData(); // Fetch data after connecting
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts.length > 0) {
+        setCurrentAccount(accounts[0]);
+        setIsConnected(true);
+        checkConnectionAndFetchData(); // Fetch data after connecting
+      }
     } catch (error) {
       console.error("Error connecting MetaMask:", error);
       setErrorMessage("Failed to connect to MetaMask. Please try again.");
+    }
+  };
+
+  const ensureConnected = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+    if (accounts.length === 0) {
+      await handleConnect(); // If not connected, prompt connection
     }
   };
 
@@ -68,13 +111,9 @@ function OG_NFT() {
     setLoading(true);
     setErrorMessage(''); // Reset error message
     try {
+      await ensureConnected(); // Ensure connected before proceeding
       const { web3, bbld_og_Instance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
-
-      if (accounts.length === 0) {
-        await handleConnect();
-        return; // Return to prevent further processing if not connected
-      }
 
       const userAddress = accounts[0];
       const userOGBalance = await bbld_og_Instance.methods.balanceOf(userAddress, 1).call();
@@ -91,13 +130,9 @@ function OG_NFT() {
   const handleApproveAllowance = async () => {
     setBuyWithBBLDLoading(true);
     try {
+      await ensureConnected(); // Ensure connected before proceeding
       const { web3, contractInstance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
-
-      if (accounts.length === 0) {
-        await handleConnect();
-        return; // Return to prevent further processing if not connected
-      }
 
       const userAddress = accounts[0];
       await contractInstance.methods.approve(OG_NFT_CONTRACT_ADDRESS, web3.utils.toWei(bbldCost, 'ether')).send({
@@ -120,13 +155,9 @@ function OG_NFT() {
   const handleBuyWithETH = async () => {
     setPurchaseLoading(true);
     try {
+      await ensureConnected(); // Ensure connected before proceeding
       const { web3, bbld_og_Instance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
-
-      if (accounts.length === 0) {
-        await handleConnect();
-        return; // Return to prevent further processing if not connected
-      }
 
       const userAddress = accounts[0];
       const ethCostInWei = web3.utils.toWei(ethCost, 'ether');
@@ -149,13 +180,9 @@ function OG_NFT() {
   const handleBuyWithBBLD = async () => {
     setBuyWithBBLDLoading(true);
     try {
+      await ensureConnected(); // Ensure connected before proceeding
       const { web3, bbld_og_Instance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
-
-      if (accounts.length === 0) {
-        await handleConnect();
-        return; // Return to prevent further processing if not connected
-      }
 
       const userAddress = accounts[0];
       if (parseFloat(userAllowance) < parseFloat(bbldCost)) {
@@ -203,16 +230,20 @@ function OG_NFT() {
         <a href="https://etherscan.io/address/0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264" target="_blank" rel="noopener noreferrer">
           <button className="button">View Contract</button></a>
 
-        <button
+        {/* <button
           className="button"
           onClick={handleCheckOGCount}
           disabled={loading}
         >
           {loading ? "Checking..." : "View your Inventory"}
-        </button>
+        </button> */}
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         {userOGCount !== null && (
           <h1>{typeof userOGCount === 'string' ? userOGCount : `You Own: ${userOGCount} OG NFTs`}</h1>
+        )}
+
+        {isConnected && currentAccount && (
+          <p>Your connected address: {currentAccount}</p>
         )}
       </div>
 

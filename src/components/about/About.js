@@ -19,13 +19,6 @@ function About({ loggedIn }) {
       <p>
         We’re all about building a lively, cheeky community where everyone’s invited to troll, laugh, and profit. With exciting features, hilarious partnerships, and interactive games on the horizon, BBLD is set to shake up the meme coin world like Drizzy’s shake-up on stage. Join us now and get in on the ground floor of the most entertaining coin since PEPE, ETH, and BTC!
       </p>
-      <div className="button-group">
-        <a href="https://etherscan.io/token/0xdcbadc585a2b0216c2fe01482aff29b37ffbc119" target="_blank" rel="noopener noreferrer">
-          <button className="button">View Contract</button>
-        </a>
-
-      </div>
-
       <div className='pretty-cards'>
 
         <div className='pretty-card'>
@@ -35,6 +28,9 @@ function About({ loggedIn }) {
           <Link to="/buy">
             <button className="button">Buy BBLD Coin</button>
           </Link>
+          <a href="https://etherscan.io/token/0xdcbadc585a2b0216c2fe01482aff29b37ffbc119" target="_blank" rel="noopener noreferrer">
+          <button className="button">View Contract</button>
+        </a>
         </div>
 
         <div className='pretty-card'>
@@ -44,6 +40,8 @@ function About({ loggedIn }) {
           <Link to="/og_nft">
             <button className="button">Buy OG NFT</button>
           </Link>
+          <a href="https://etherscan.io/address/0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264" target="_blank" rel="noopener noreferrer">
+          <button className="button">View Contract</button></a>
         </div>
 
       </div>
