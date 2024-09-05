@@ -4,6 +4,8 @@ import logo from '../../assets/bbld/logo.png'; // Adjust the path if necessary
 import bbldchar from '../../assets/bbld/bbld_char.jpg'; // Adjust the path if necessary
 import { Link } from 'react-router-dom';
 import { initializeTatum } from '../../services/bbldService'; // Adjust the path if necessary
+import openSeaIcon from '../../assets/openSea.png'; // Adjust the path if necessary
+import raribleIcon from '../../assets/rarible.png'; // Adjust the path if necessary
 
 function OG_NFT() {
   const [bbldCost, setBbldCost] = useState('Loading...');
@@ -104,7 +106,10 @@ function OG_NFT() {
       });
 
       alert("Allowance approved!");
-      setUserAllowance(bbldCost); // Update user's allowance
+      // Refresh the allowance and inventory after approval
+      const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
+      setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+      handleCheckOGCount(); // Refresh inventory after approval
     } catch (error) {
       console.error("Error approving allowance:", error);
       alert("Error approving allowance. Please try again.");
@@ -177,13 +182,27 @@ function OG_NFT() {
     <div className="main-container" style={{ textAlign: 'center' }}>
       <img src={logo} alt="BBLD Logo" className="logo" />
       <h2>OG NFT</h2>
+      <h2>Only 100 available</h2>
+      <h2>One mint per wallet!</h2>
+      <div>
+        <a href="https://opensea.io/collection/unidentified-contract-9fa9ef06-7b51-4ef6-abad-fa9d" target="_blank" rel="noopener noreferrer">
+          <img src={openSeaIcon} alt="OpenSea" style={{ width: '24px', height: '24px', marginRight: '10px' }} />
+        </a>
+        <a href="https://rarible.com/collection/0x5886847a75fee2acacb87f6ae63b3af1ab71b264/items" target="_blank" rel="noopener noreferrer">
+          <img src={raribleIcon} alt="Rarible" style={{ width: '24px', height: '24px' }} />
+        </a>
+      </div>
+
+
+      <p>
+        Welcome to BBLD OG, the genesis collection that celebrates the first wave of believers in the BBLD community. These NFTs aren’t just collectibles—they’re your key to the future of BBLD, with only 100 unique pieces available.<br /><br />
+        VIP Status: As a BBLD OG owner, you’re not just part of the community—you’re at its core. This NFT grants you insider status, ensuring you’re always ahead of the game.<br /><br />
+        Join the BBLD OG ranks and unlock a future full of benefits, rewards, and exclusive opportunities. This is more than just an NFT—it’s your passport to the BBLD universe.
+      </p>
 
       <div style={{ marginBottom: '40px' }}>
-        <p>This will be where the future OG NFT mint will take place once we have 100 holders.</p>
-        <p>This will be an ERC1155 contract for our OG holders and will get special rewards for staking and future mints.</p>
-        <p>ONE OG NFT PER WALLET!</p>
         <a href="https://etherscan.io/address/0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264" target="_blank" rel="noopener noreferrer">
-        <button className="button">View Contract</button></a>
+          <button className="button">View Contract</button></a>
 
         <button
           className="button"
@@ -196,27 +215,59 @@ function OG_NFT() {
         {userOGCount !== null && (
           <h1>{typeof userOGCount === 'string' ? userOGCount : `You Own: ${userOGCount} OG NFTs`}</h1>
         )}
-
       </div>
 
-      {/* Explanation about Gas Fees */}
 
-      <div style={{ marginBottom: '20px' }}>
-        <p>Note: Buying with BBLD (an ERC20 token) requires two transactions—one to approve the allowance and another to buy the NFT. Each transaction will incur a gas fee. This is because ERC20 tokens require a separate approval step to allow the ERC1155 contract to spend tokens on behalf of the user. Conversely, buying with ETH requires only one transaction and one gas fee since the payment is made directly in ETH without needing an allowance.</p>
-      </div>
+
+
 
 
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
         <div className='pretty-card' style={{ padding: '20px', boxShadow: '0px 0px 10px rgba(0,0,0,0.1)', borderRadius: '10px', width: '300px' }}>
           <img src={bbldchar} alt="bbld character" style={{ width: '100%', borderRadius: '10px' }} />
           <h2>OG NFT</h2>
+          <div>
+            <a href="https://opensea.io/collection/unidentified-contract-9fa9ef06-7b51-4ef6-abad-fa9d" target="_blank" rel="noopener noreferrer">
+              <img src={openSeaIcon} alt="OpenSea" style={{ width: '24px', height: '24px', marginRight: '10px' }} />
+            </a>
+            <a href="https://rarible.com/collection/0x5886847a75fee2acacb87f6ae63b3af1ab71b264/items" target="_blank" rel="noopener noreferrer">
+              <img src={raribleIcon} alt="Rarible" style={{ width: '24px', height: '24px' }} />
+            </a>
+          </div>
+
+          <br></br>
+
+
+          <p> Why BBLD OG?<br /><br />
+            Exclusive Perks: BBLD OG holders are in for a treat! Enjoy access to special perks, including staking rewards, exclusive drops, and early access to new BBLD releases.</p>
           {isConnected && (
             <div>
+              <br></br>
               <p>Cost (ETH): {ethCost}</p>
               <p>Cost (BBLD): {bbldCost}</p>
-
+              <p>Current Allowance: {userAllowance} BBLD</p>
+              <br></br>
               {userAllowance !== null ? (
-                <p>Current Allowance: {userAllowance} BBLD</p>
+                parseFloat(userAllowance) < parseFloat(bbldCost) ? (
+                  <><p>You currently do not have enough allowance. Please approve BBLD allowance to buy with BBLD</p>
+                    <button
+                      className="button"
+                      onClick={handleApproveAllowance}
+                      disabled={buyWithBBLDLoading}
+                    >
+                      {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+                    </button></>
+                ) : (
+                  <>
+                    <button
+                      className="button"
+                      onClick={handleBuyWithBBLD}
+                      disabled={buyWithBBLDLoading}
+                    >
+                      {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
+                    </button>
+                  </>
+                )
               ) : (
                 <button
                   className="button"
@@ -226,14 +277,6 @@ function OG_NFT() {
                   {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
                 </button>
               )}
-
-              <button
-                className="button"
-                onClick={handleBuyWithBBLD}
-                disabled={buyWithBBLDLoading}
-              >
-                {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
-              </button>
 
               <button
                 className="button"
@@ -253,6 +296,12 @@ function OG_NFT() {
             </button>
           )}
         </div>
+
+      </div>
+      {/* Explanation about Gas Fees */}
+      <div style={{ marginBottom: '20px' }}>
+        <p>Note: Buying with BBLD (an ERC20 token) requires two transactions—one to approve the allowance and another to buy the NFT. Each transaction will incur a gas fee. This is because ERC20 tokens require a separate approval step to allow the ERC1155 contract to spend tokens on behalf of the user. <br>
+        </br>Conversely, buying with ETH requires only one transaction and one gas fee since the payment is made directly in ETH without needing an allowance.</p>
       </div>
 
       {/* Styled Button for navigation */}
