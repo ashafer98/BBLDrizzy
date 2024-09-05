@@ -17,7 +17,6 @@ function OG_NFT() {
   const [userAllowance, setUserAllowance] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
-  const BBLD_CONTRACT_ADDRESS = '0xDcBADc585a2b0216C2Fe01482AFf29B37ffbC119';
   const OG_NFT_CONTRACT_ADDRESS = '0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264';
 
   useEffect(() => {
@@ -217,11 +216,6 @@ function OG_NFT() {
         )}
       </div>
 
-
-
-
-
-
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
         <div className='pretty-card' style={{ padding: '20px', boxShadow: '0px 0px 10px rgba(0,0,0,0.1)', borderRadius: '10px', width: '300px' }}>
           <img src={bbldchar} alt="bbld character" style={{ width: '100%', borderRadius: '10px' }} />
@@ -237,28 +231,21 @@ function OG_NFT() {
 
           <br></br>
 
-
           <p> Why BBLD OG?<br /><br />
             Exclusive Perks: BBLD OG holders are in for a treat! Enjoy access to special perks, including staking rewards, exclusive drops, and early access to new BBLD releases.</p>
           {isConnected && (
             <div>
-              <br></br>
+              <br />
               <p>Cost (ETH): {ethCost}</p>
               <p>Cost (BBLD): {bbldCost}</p>
               <p>Current Allowance: {userAllowance} BBLD</p>
-              <br></br>
-              {userAllowance !== null ? (
-                parseFloat(userAllowance) < parseFloat(bbldCost) ? (
-                  <><p>You currently do not have enough allowance. Please approve BBLD allowance to buy with BBLD</p>
-                    <button
-                      className="button"
-                      onClick={handleApproveAllowance}
-                      disabled={buyWithBBLDLoading}
-                    >
-                      {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
-                    </button></>
-                ) : (
-                  <>
+              <br />
+              {userOGCount !== null && parseInt(userOGCount) > 0 ? (
+                <>You already own 1 OG NFT. Only 1 per wallet.</>
+              ) : (
+                <>
+                  {/* First handle the BBLD logic */}
+                  {userAllowance !== null && parseFloat(userAllowance) >= parseFloat(bbldCost) ? (
                     <button
                       className="button"
                       onClick={handleBuyWithBBLD}
@@ -266,27 +253,32 @@ function OG_NFT() {
                     >
                       {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
                     </button>
-                  </>
-                )
-              ) : (
-                <button
-                  className="button"
-                  onClick={handleApproveAllowance}
-                  disabled={buyWithBBLDLoading}
-                >
-                  {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
-                </button>
-              )}
+                  ) : (
+                    <>
+                      <p>You currently do not have enough allowance. Please approve BBLD allowance to buy with BBLD.</p>
+                      <button
+                        className="button"
+                        onClick={handleApproveAllowance}
+                        disabled={buyWithBBLDLoading}
+                      >
+                        {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+                      </button>
+                    </>
+                  )}
 
-              <button
-                className="button"
-                onClick={handleBuyWithETH}
-                disabled={purchaseLoading}
-              >
-                {purchaseLoading ? "Processing..." : "Buy With ETH"}
-              </button>
+                  {/* Now show the Buy with ETH button below */}
+                  <button
+                    className="button"
+                    onClick={handleBuyWithETH}
+                    disabled={purchaseLoading}
+                  >
+                    {purchaseLoading ? "Processing..." : "Buy With ETH"}
+                  </button>
+                </>
+              )}
             </div>
           )}
+
           {!isConnected && (
             <button
               className="button"
@@ -296,7 +288,6 @@ function OG_NFT() {
             </button>
           )}
         </div>
-
       </div>
       {/* Explanation about Gas Fees */}
       <div style={{ marginBottom: '20px' }}>
