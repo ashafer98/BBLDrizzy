@@ -1,0 +1,39 @@
+{
+    "name": "BBLD_OG",
+    "description": "The original BBLD character, representing the spirit of big booty. This exclusive NFT was only available to the first 100 OG supporters of BBLD and will serve as your ticket to future drops and exclusive perks. A true icon of the BBLD universe!",
+    "image": "https://bbldrizzy.s3.us-east-2.amazonaws.com/metadata/bbld_char.jpg",
+    "attributes": [
+      {
+        "trait_type": "Booty Size",
+        "value": "Extra Large"
+      },
+      {
+        "trait_type": "Chord",
+        "value": "A Minor"
+      },
+      {
+        "trait_type": "Pimpin",
+        "value": "Big"
+      },
+      {
+        "trait_type": "Rarity",
+        "value": "OG"
+      },
+      {
+        "trait_type": "Meme Status",
+        "value": "Internet Icon"
+      },
+      {
+        "trait_type": "Supporter Status",
+        "value": "First 100 OG"
+      },
+      {
+        "trait_type": "Perks",
+        "value": "Future Drops & Exclusive Access"
+      },
+      {
+        "trait_type": "If you dont own one",
+        "value": "Its to late"
+      }
+    ]
+}
