@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import xLogo from 'C:/Users/anyas/BBLDrizzy/src/assets/xLogo.webp'; // Full path to the X logo image
+import xLogo from '../../assets/xLogo.webp'; // Full path to the X logo image
 
 function Footer() {
   return (

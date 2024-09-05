@@ -8,45 +8,84 @@ import { initializeTatum } from '../../services/bbldService'; // Adjust the path
 function OG_NFT() {
   const [bbldCost, setBbldCost] = useState('Loading...');
   const [ethCost, setEthCost] = useState('Loading...');
-  const [userOGCount, setUserOGCount] = useState(null); // Initialize as null to indicate it hasn't been fetched yet
-  const [loading, setLoading] = useState(false); // To manage loading state
-  const [purchaseLoading, setPurchaseLoading] = useState(false); // To manage loading state for purchase
-  const [buyWithBBLDLoading, setBuyWithBBLDLoading] = useState(false); // To manage loading state for BBLD purchase
+  const [userOGCount, setUserOGCount] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [purchaseLoading, setPurchaseLoading] = useState(false);
+  const [buyWithBBLDLoading, setBuyWithBBLDLoading] = useState(false);
+  const [userAllowance, setUserAllowance] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const BBLD_CONTRACT_ADDRESS = '0xDcBADc585a2b0216C2Fe01482AFf29B37ffbC119';
+  const OG_NFT_CONTRACT_ADDRESS = '0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264';
 
   useEffect(() => {
-    async function fetchCosts() {
-      const { web3, bbld_og_Instance } = await initializeTatum();
-
-      const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
-      const ethCostInWei = await bbld_og_Instance.methods.ethPrice().call();
-
-      const ethCostFormatted = web3.utils.fromWei(ethCostInWei, 'ether'); // Convert from wei to ETH
-
-      setBbldCost(bbldCost.toString());
-      setEthCost(ethCostFormatted);
-    }
-
-    fetchCosts();
+    fetchCostsAndAllowance();
   }, []);
+
+  const fetchCostsAndAllowance = async () => {
+    const { web3, bbld_og_Instance, contractInstance } = await initializeTatum();
+
+    const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
+    const ethCostInWei = await bbld_og_Instance.methods.ethPrice().call();
+    const ethCostFormatted = web3.utils.fromWei(ethCostInWei, 'ether');
+
+    setBbldCost(bbldCost.toString());
+    setEthCost(ethCostFormatted);
+
+    const accounts = await web3.eth.getAccounts();
+    if (accounts.length > 0) {
+      const userAddress = accounts[0];
+      const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
+      setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+    }
+  };
 
   const handleCheckOGCount = async () => {
     setLoading(true);
+    setErrorMessage(''); // Reset error message
     try {
       const { web3, bbld_og_Instance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        setUserOGCount("No Web3 provider found.");
-      } else {
-        const userAddress = accounts[0];
-        const userOGBalance = await bbld_og_Instance.methods.balanceOf(userAddress, 1).call(); // Assuming token ID is 1
-        setUserOGCount(userOGBalance);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
       }
+
+      const userAddress = accounts[0];
+      const userOGBalance = await bbld_og_Instance.methods.balanceOf(userAddress, 1).call();
+      setUserOGCount(userOGBalance);
     } catch (error) {
       console.error("Error fetching OG NFT count:", error);
-      setUserOGCount("Error fetching OG NFT count.");
+      setErrorMessage("Error fetching OG NFT count. Please connect your wallet.");
+      setUserOGCount(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleApproveAllowance = async () => {
+    setBuyWithBBLDLoading(true);
+    try {
+      const { web3, contractInstance } = await initializeTatum();
+      const accounts = await web3.eth.getAccounts();
+
+      if (accounts.length === 0) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
+      }
+
+      const userAddress = accounts[0];
+      await contractInstance.methods.approve(OG_NFT_CONTRACT_ADDRESS, web3.utils.toWei(bbldCost, 'ether')).send({
+        from: userAddress,
+      });
+
+      alert("Allowance approved!");
+      setUserAllowance(bbldCost); // Update user's allowance
+    } catch (error) {
+      console.error("Error approving allowance:", error);
+      alert("Error approving allowance. Please try again.");
+    } finally {
+      setBuyWithBBLDLoading(false);
     }
   };
 
@@ -57,12 +96,12 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        alert("No Web3 provider found. Please connect your wallet.");
-        return;
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
       }
 
       const userAddress = accounts[0];
-      const ethCostInWei = web3.utils.toWei(ethCost, 'ether'); // Convert ETH cost to wei
+      const ethCostInWei = web3.utils.toWei(ethCost, 'ether');
 
       await bbld_og_Instance.methods.buyWithETH(1).send({
         from: userAddress,
@@ -70,7 +109,7 @@ function OG_NFT() {
       });
 
       alert("Purchase successful!");
-      handleCheckOGCount(); // Update the user's OG NFT count after purchase
+      handleCheckOGCount(); // Refresh inventory after purchase
     } catch (error) {
       console.error("Error during purchase:", error);
       alert("Error during purchase. Please try again.");
@@ -86,24 +125,22 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        alert("No Web3 provider found. Please connect your wallet.");
-        return;
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
       }
 
       const userAddress = accounts[0];
+      if (userAllowance < bbldCost) {
+        alert("Insufficient allowance. Please approve the allowance first.");
+        return;
+      }
 
-      // Approve the contract to spend BBLD on the user's behalf
-      await contractInstance.methods.approve(bbld_og_Instance.options.address, bbldCost).send({
-        from: userAddress,
-      });
-
-      // Buy the NFT with BBLD
       await bbld_og_Instance.methods.buyWithBBLD(1).send({
         from: userAddress,
       });
 
       alert("Purchase successful!");
-      handleCheckOGCount(); // Update the user's OG NFT count after purchase
+      handleCheckOGCount(); // Refresh inventory after purchase
     } catch (error) {
       console.error("Error during purchase with BBLD:", error);
       alert("Error during purchase with BBLD. Please try again.");
@@ -129,17 +166,35 @@ function OG_NFT() {
         >
           {loading ? "Checking..." : "View your Inventory"}
         </button>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         {userOGCount !== null && (
           <h1>{typeof userOGCount === 'string' ? userOGCount : `You Own: ${userOGCount} OG NFTs`}</h1>
         )}
       </div>
 
-      {/* Centering the pretty card */}
+      {/* Explanation about Gas Fees */}
+      <div style={{ marginBottom: '20px' }}>
+        <p>Note: Buying with BBLD (an ERC20 token) requires two transactions—one to approve the allowance and another to buy the NFT. Each transaction will incur a gas fee. This is because ERC20 tokens require a separate approval step to allow the ERC1155 contract to spend tokens on behalf of the user. Conversely, buying with ETH requires only one transaction and one gas fee since the payment is made directly in ETH without needing an allowance.</p>
+      </div>
+
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
         <div className='pretty-card' style={{ padding: '20px', boxShadow: '0px 0px 10px rgba(0,0,0,0.1)', borderRadius: '10px', width: '300px' }}>
-          <img src={bbldchar} alt="BBLD char" style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain', marginBottom: '20px' }} />
-          <p>Cost: {bbldCost} BBLD</p>
-          <p>Cost: {ethCost} ETH</p>
+          <img src={bbldchar} alt="bbld character" style={{ width: '100%', borderRadius: '10px' }} />
+          <h2>OG NFT</h2>
+          <p>Cost (ETH): {ethCost}</p>
+          <p>Cost (BBLD): {bbldCost}</p>
+
+          {userAllowance !== null ? (
+            <p>Current Allowance: {userAllowance} BBLD</p>
+          ) : (
+            <button 
+              className="button" 
+              onClick={handleApproveAllowance} 
+              disabled={buyWithBBLDLoading}
+            >
+              {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+            </button>
+          )}
 
           <button 
             className="button" 
@@ -148,7 +203,7 @@ function OG_NFT() {
           >
             {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
           </button>
-
+          
           <button 
             className="button" 
             onClick={handleBuyWithETH} 
@@ -159,6 +214,7 @@ function OG_NFT() {
         </div>
       </div>
 
+      {/* Styled Button for navigation */}
       <Link to="/">
         <button className="button">Back</button>
       </Link>
