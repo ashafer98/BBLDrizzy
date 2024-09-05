@@ -41,7 +41,7 @@ function OG_NFT() {
         setEthCost(ethCostFormatted);
 
         const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
-        setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+        setUserAllowance(web3.utils.fromWei(allowance, 'wei'));
         handleCheckOGCount(); // Refresh inventory on successful connection
       } else {
         setIsConnected(false);
@@ -108,7 +108,7 @@ function OG_NFT() {
       alert("Allowance approved!");
       // Refresh the allowance and inventory after approval
       const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
-      setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+      setUserAllowance(web3.utils.fromWei(allowance, 'wei'));
       handleCheckOGCount(); // Refresh inventory after approval
     } catch (error) {
       console.error("Error approving allowance:", error);
@@ -150,7 +150,7 @@ function OG_NFT() {
   const handleBuyWithBBLD = async () => {
     setBuyWithBBLDLoading(true);
     try {
-      const { web3, bbld_og_Instance, contractInstance } = await initializeTatum();
+      const { web3, bbld_og_Instance } = await initializeTatum();
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
