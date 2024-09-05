@@ -29,6 +29,7 @@ function OG_NFT() {
 
       if (accounts.length > 0) {
         setIsConnected(true);
+        setErrorMessage(''); // Clear error message on successful connection
         const userAddress = accounts[0];
         const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
         const ethCostInWei = await bbld_og_Instance.methods.ethPrice().call();
@@ -39,6 +40,7 @@ function OG_NFT() {
 
         const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
         setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+        handleCheckOGCount(); // Refresh inventory on successful connection
       } else {
         setIsConnected(false);
         setBbldCost('Loading...');
@@ -70,6 +72,7 @@ function OG_NFT() {
 
       if (accounts.length === 0) {
         await handleConnect();
+        return; // Return to prevent further processing if not connected
       }
 
       const userAddress = accounts[0];
@@ -92,6 +95,7 @@ function OG_NFT() {
 
       if (accounts.length === 0) {
         await handleConnect();
+        return; // Return to prevent further processing if not connected
       }
 
       const userAddress = accounts[0];
@@ -117,6 +121,7 @@ function OG_NFT() {
 
       if (accounts.length === 0) {
         await handleConnect();
+        return; // Return to prevent further processing if not connected
       }
 
       const userAddress = accounts[0];
@@ -145,6 +150,7 @@ function OG_NFT() {
 
       if (accounts.length === 0) {
         await handleConnect();
+        return; // Return to prevent further processing if not connected
       }
 
       const userAddress = accounts[0];
@@ -176,7 +182,8 @@ function OG_NFT() {
         <p>This will be where the future OG NFT mint will take place once we have 100 holders.</p>
         <p>This will be an ERC1155 contract for our OG holders and will get special rewards for staking and future mints.</p>
         <p>ONE OG NFT PER WALLET!</p>
-
+        <a href="https://etherscan.io/address/0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264" target="_blank" rel="noopener noreferrer">
+        <button className="button">View Contract</button></a>
 
         <button
           className="button"
@@ -203,45 +210,48 @@ function OG_NFT() {
         <div className='pretty-card' style={{ padding: '20px', boxShadow: '0px 0px 10px rgba(0,0,0,0.1)', borderRadius: '10px', width: '300px' }}>
           <img src={bbldchar} alt="bbld character" style={{ width: '100%', borderRadius: '10px' }} />
           <h2>OG NFT</h2>
-          {isConnected && (<div>
-            <p>Cost (ETH): {ethCost}</p>
-            <p>Cost (BBLD): {bbldCost}</p>
+          {isConnected && (
+            <div>
+              <p>Cost (ETH): {ethCost}</p>
+              <p>Cost (BBLD): {bbldCost}</p>
 
-            {userAllowance !== null ? (
-              <p>Current Allowance: {userAllowance} BBLD</p>
-            ) : (
+              {userAllowance !== null ? (
+                <p>Current Allowance: {userAllowance} BBLD</p>
+              ) : (
+                <button
+                  className="button"
+                  onClick={handleApproveAllowance}
+                  disabled={buyWithBBLDLoading}
+                >
+                  {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+                </button>
+              )}
+
               <button
                 className="button"
-                onClick={handleApproveAllowance}
+                onClick={handleBuyWithBBLD}
                 disabled={buyWithBBLDLoading}
               >
-                {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+                {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
               </button>
-            )}
 
+              <button
+                className="button"
+                onClick={handleBuyWithETH}
+                disabled={purchaseLoading}
+              >
+                {purchaseLoading ? "Processing..." : "Buy With ETH"}
+              </button>
+            </div>
+          )}
+          {!isConnected && (
             <button
               className="button"
-              onClick={handleBuyWithBBLD}
-              disabled={buyWithBBLDLoading}
+              onClick={handleConnect}
             >
-              {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
+              Connect
             </button>
-
-            <button
-              className="button"
-              onClick={handleBuyWithETH}
-              disabled={purchaseLoading}
-            >
-              {purchaseLoading ? "Processing..." : "Buy With ETH"}
-            </button>
-          </div>
-          )} :
-          <button
-            className="button"
-            onClick={handleConnect}
-          >
-            Connect
-          </button>
+          )}
         </div>
       </div>
 
