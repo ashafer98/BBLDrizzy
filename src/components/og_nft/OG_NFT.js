@@ -14,28 +14,50 @@ function OG_NFT() {
   const [buyWithBBLDLoading, setBuyWithBBLDLoading] = useState(false);
   const [userAllowance, setUserAllowance] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
   const BBLD_CONTRACT_ADDRESS = '0xDcBADc585a2b0216C2Fe01482AFf29B37ffbC119';
   const OG_NFT_CONTRACT_ADDRESS = '0x5886847A75feE2AcaCB87f6ae63B3aF1AB71B264';
 
   useEffect(() => {
-    fetchCostsAndAllowance();
+    checkConnectionAndFetchData();
   }, []);
 
-  const fetchCostsAndAllowance = async () => {
-    const { web3, bbld_og_Instance, contractInstance } = await initializeTatum();
+  const checkConnectionAndFetchData = async () => {
+    try {
+      const { web3, bbld_og_Instance, contractInstance } = await initializeTatum();
+      const accounts = await web3.eth.getAccounts();
 
-    const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
-    const ethCostInWei = await bbld_og_Instance.methods.ethPrice().call();
-    const ethCostFormatted = web3.utils.fromWei(ethCostInWei, 'ether');
+      if (accounts.length > 0) {
+        setIsConnected(true);
+        const userAddress = accounts[0];
+        const bbldCost = await bbld_og_Instance.methods.bbldPrice().call();
+        const ethCostInWei = await bbld_og_Instance.methods.ethPrice().call();
+        const ethCostFormatted = web3.utils.fromWei(ethCostInWei, 'ether');
 
-    setBbldCost(bbldCost.toString());
-    setEthCost(ethCostFormatted);
+        setBbldCost(bbldCost.toString());
+        setEthCost(ethCostFormatted);
 
-    const accounts = await web3.eth.getAccounts();
-    if (accounts.length > 0) {
-      const userAddress = accounts[0];
-      const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
-      setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+        const allowance = await contractInstance.methods.allowance(userAddress, OG_NFT_CONTRACT_ADDRESS).call();
+        setUserAllowance(web3.utils.fromWei(allowance, 'ether'));
+      } else {
+        setIsConnected(false);
+        setBbldCost('Loading...');
+        setEthCost('Loading...');
+        setUserAllowance(null);
+      }
+    } catch (error) {
+      console.error("Error checking connection and fetching data:", error);
+      setErrorMessage("An error occurred. Please try again.");
+    }
+  };
+
+  const handleConnect = async () => {
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      checkConnectionAndFetchData(); // Fetch data after connecting
+    } catch (error) {
+      console.error("Error connecting MetaMask:", error);
+      setErrorMessage("Failed to connect to MetaMask. Please try again.");
     }
   };
 
@@ -47,8 +69,7 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
+        await handleConnect();
       }
 
       const userAddress = accounts[0];
@@ -70,8 +91,7 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
+        await handleConnect();
       }
 
       const userAddress = accounts[0];
@@ -96,8 +116,7 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
+        await handleConnect();
       }
 
       const userAddress = accounts[0];
@@ -125,12 +144,11 @@ function OG_NFT() {
       const accounts = await web3.eth.getAccounts();
 
       if (accounts.length === 0) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        fetchCostsAndAllowance(); // Fetch allowance and costs after connecting
+        await handleConnect();
       }
 
       const userAddress = accounts[0];
-      if (userAllowance < bbldCost) {
+      if (parseFloat(userAllowance) < parseFloat(bbldCost)) {
         alert("Insufficient allowance. Please approve the allowance first.");
         return;
       }
@@ -159,9 +177,10 @@ function OG_NFT() {
         <p>This will be an ERC1155 contract for our OG holders and will get special rewards for staking and future mints.</p>
         <p>ONE OG NFT PER WALLET!</p>
 
-        <button 
-          className="button" 
-          onClick={handleCheckOGCount} 
+
+        <button
+          className="button"
+          onClick={handleCheckOGCount}
           disabled={loading}
         >
           {loading ? "Checking..." : "View your Inventory"}
@@ -170,46 +189,58 @@ function OG_NFT() {
         {userOGCount !== null && (
           <h1>{typeof userOGCount === 'string' ? userOGCount : `You Own: ${userOGCount} OG NFTs`}</h1>
         )}
+
       </div>
 
       {/* Explanation about Gas Fees */}
+
       <div style={{ marginBottom: '20px' }}>
         <p>Note: Buying with BBLD (an ERC20 token) requires two transactions—one to approve the allowance and another to buy the NFT. Each transaction will incur a gas fee. This is because ERC20 tokens require a separate approval step to allow the ERC1155 contract to spend tokens on behalf of the user. Conversely, buying with ETH requires only one transaction and one gas fee since the payment is made directly in ETH without needing an allowance.</p>
       </div>
+
 
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
         <div className='pretty-card' style={{ padding: '20px', boxShadow: '0px 0px 10px rgba(0,0,0,0.1)', borderRadius: '10px', width: '300px' }}>
           <img src={bbldchar} alt="bbld character" style={{ width: '100%', borderRadius: '10px' }} />
           <h2>OG NFT</h2>
-          <p>Cost (ETH): {ethCost}</p>
-          <p>Cost (BBLD): {bbldCost}</p>
+          {isConnected && (<div>
+            <p>Cost (ETH): {ethCost}</p>
+            <p>Cost (BBLD): {bbldCost}</p>
 
-          {userAllowance !== null ? (
-            <p>Current Allowance: {userAllowance} BBLD</p>
-          ) : (
-            <button 
-              className="button" 
-              onClick={handleApproveAllowance} 
+            {userAllowance !== null ? (
+              <p>Current Allowance: {userAllowance} BBLD</p>
+            ) : (
+              <button
+                className="button"
+                onClick={handleApproveAllowance}
+                disabled={buyWithBBLDLoading}
+              >
+                {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+              </button>
+            )}
+
+            <button
+              className="button"
+              onClick={handleBuyWithBBLD}
               disabled={buyWithBBLDLoading}
             >
-              {buyWithBBLDLoading ? "Approving..." : "Approve Allowance"}
+              {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
             </button>
-          )}
 
-          <button 
-            className="button" 
-            onClick={handleBuyWithBBLD} 
-            disabled={buyWithBBLDLoading}
+            <button
+              className="button"
+              onClick={handleBuyWithETH}
+              disabled={purchaseLoading}
+            >
+              {purchaseLoading ? "Processing..." : "Buy With ETH"}
+            </button>
+          </div>
+          )} :
+          <button
+            className="button"
+            onClick={handleConnect}
           >
-            {buyWithBBLDLoading ? "Processing..." : "Buy With BBLD"}
-          </button>
-          
-          <button 
-            className="button" 
-            onClick={handleBuyWithETH} 
-            disabled={purchaseLoading}
-          >
-            {purchaseLoading ? "Processing..." : "Buy With ETH"}
+            Connect
           </button>
         </div>
       </div>
