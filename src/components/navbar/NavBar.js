@@ -111,6 +111,9 @@ function Navbar({ loggedIn, setLoggedIn }) {
         <Link to="/staking" className="navbar-button-link" onClick={toggleMenu}>
           <button className="navbar-button">Staking</button>
         </Link>
+        <Link to="/uniswap" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Liquidity Pool</button>
+        </Link>
         {!loggedIn && (
           <button className="navbar-button" onClick={() => { handleLoginLogout(); toggleMenu(); }}>
             Login
@@ -142,6 +145,9 @@ function Navbar({ loggedIn, setLoggedIn }) {
         </Link>
         <Link to="/staking" className="navbar-button-link">
           <button className="navbar-button">Staking</button>
+        </Link>
+        <Link to="/uniswap" className="navbar-button-link" onClick={toggleMenu}>
+          <button className="navbar-button">Liquidity Pool</button>
         </Link>
         {!loggedIn && (
           <button className="navbar-button" onClick={handleLoginLogout}>
